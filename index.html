@@ -1,392 +1,400 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>祥龙的网站</title>
-	<link rel="stylesheet" href="dist/swiper-bundle.min.css">
+    <title>祥龙的网站,芜湖起飞</title>
+    <link rel="stylesheet" href="dist/swiper-bundle.min.css">
 </head>
 <style type="text/css">
-	.div-top-left
-	{
-		width: 50%;
-		height: 40px;
-		position: absolute;
-		top: -30px;
-		left: 85px;
-		line-height: 50px;
-		color: #EEA9B8;
-		font-size: 30px;
-		font-family: STXingkai;
-		letter-spacing: 8px;
-	}
-	.img-logo
-	{
-		width: 80PX;
-		height: 80px;
-		border-radius: 40px;
-		position: relative;
-		right: 40px;
-		bottom: -30px;
-	}
-	.div-top-big
-	{
-		width: 100%;
-		height: 80px;
-		background:url(picture//87162332_p0-test.jpg) no-repeat; 
-		background-size: 100%;
-		margin: 0px;
-		border: 0px;
-	}
-	.search
-	{
-		width: 500px;
-		height: 40px;
-		position: absolute;
-		top: 23px;
-		right: 0px;
-		left: 580px;
-	}
-	.input-text
-	{
-		width: 300px;
-		height: 28px;		
-		border:2px solid pink;
-		outline: none;
-		/*border-radius: 10px;*/
-		/*border-top-left-radius: 10px; */
-		/*border-bottom-left-radius: 10px;*/
-	}
-	.input-sub
-	{
-		width: 80px;
-		height: 34px;
-		position: relative;
-		top: 1px;
-		right: 6px;
-		border: 2px;
-		background: #EEA9B8;
-		cursor:pointer;
-		border-radius: 2px;
-		/*border-top-right-radius: 10px; */
-		/*border-bottom-right-radius: 10px;*/
-	}
-	input:focus
-	{
-		/*border-color: blue;*/
-	}
-	/*这里是轮播的设置*/
-	.swiper-container {
-		width: 100%;
-		height: 100%;
-	}
-	.swiper-slide {
-		text-align: center;
-		font-size: 18px;
-		background: #fff;
-		/* Center slide text vertically */
-		display: -webkit-box;
-		display: -ms-flexbox;
-		display: -webkit-flex;
-		display: flex;
-		-webkit-box-pack: center;
-		-ms-flex-pack: center;
-		-webkit-justify-content: center;
-		justify-content: center;
-		-webkit-box-align: center;
-		-ms-flex-align: center;
-		-webkit-align-items: center;
-		align-items: center;
-		background: #B0E2FF;
-	}
-	.img-big
-	{
-		width: 90%;
-		height: 500px;
-	}
-	
-	.swiper-button-next
-	{
-		background: #B0E2FF;
-	}
-	.swiper-button-prev
-	{
-		background: #B0E2FF;
-	}
-	.swiper-container
-	{
-		background: #B0E2FF;
-	}
-	.swiper-wrapper
-	{
-		background: #B0E2FF;
-	}
-	/*轮播的设置到此为止*/
-	.body-back
-	{
-		background: #B0E2FF;
-		height: 1500px;	/*页面的高度在此设置（记得和下面一起设置）----祥龙nb*/
-		margin: 0;
-		padding: 0;
-	}
-	/*这里是页脚的设置*/
-	.div-bottom-big
-	{
-		width: 100%;
-		height: 300px;
-		/*background: #E8FFE8;*/
-		position: absolute;
-		top: 1500px;	/*页面的高度在此设置(在这里-设置我)*/
-		text-align: center;
-		background: url(picture//1624000955512.jpg) no-repeat;
-	}
-	.div-bottom-left
-	{
-		width: 50%;
-		height: 300px;
-		font-family: STKaiti;
-		font-size:23px;
-		/*background: blue;*/
-		position: relative;
-		left: 10px;
-		text-align: center;
-		color: #B0E2FF;
-	}
-	.div-bottom-right
-	{
-		width: 50%;
-		height: 300px;
-		font-family: STKaiti;
-		font-size:23px;
-		position: relative;
-		bottom: 300px;
-		left: 750px;
-		color: #B0E2FF;
-		/*background: green;*/
-	}
-	a
-	{
-		text-decoration: none;
-	}
-	a:hover
-	{
-		/*background:#00F; */
-		color:#73c9e5;
-	}
-	/*页脚的设置到此为止*/
-	.spe
-	{
-		position: relative;
-		bottom: -15px;
-	}
-	/*这里是最上面的超链接的设置*/
-	.a-top-1
-	{
-		position: absolute;
-		font-size: 37px;
-		top: 20px;
-		right: 380px;
-		font-family: STXingkai;
-		color: #87CEFF;
-	}
-	.a-top-2
-	{
-		position: absolute;
-		font-size: 37px;
-		top: 20px;
-		right: 275px;
-		font-family: STXingkai;
-		color: #87CEFF;
-	}
-	.a-top-3
-	{
-		position: absolute;
-		font-size: 37px;
-		top: 20px;
-		right: 160px;
-		font-family: STXingkai;
-		color: #87CEFF;
-	}
-	.a-top-4
-	{
-		position: absolute;
-		font-size: 37px;
-		top: 20px;
-		right: 40px;
-		font-family: STXingkai;
-		color: #87CEFF;
-	}
-	/*最上面的超链接的设置到此为止*/
-	.text-zhongjian
-	{
-		font-family: STXingkai;
-		position: relative;
-		top: 150px;
-		color: #FF6666;
-		font-size: 35px;
-	}
-	.a-setting
-	{
-		color: #B0E2FF;
-	}
-	.gu
-	{
-		position: fixed;
-		right: 10px;
-		z-index: 10;
-		font-family: STXingkai;
-		color: #FF6666;
-		font-size: 22px;
-	}
-	.pictur-fix
-	{
-		width: 60px;
-		height: 60px;
-		border-radius: 30px;
-	}
-	.text-zhongjian-1
-	{
-		width: 50%;
-		font-family: 华文行楷;
-		position: relative;
-		top: 150px;
-		color: #FF6666;
-		font-size: 35px;
-		padding: 0px;
-		border: 0px;
-		margin: 0px;
-	}
-	.div-z-1
-	{
-		font-size: 27px;
-		color: blue;
-	}
-	.text-zhongjian-2
-	{
-		width: 40%;
-		font-family: 华文行楷;
-		position: relative;
-		top: -420px;
-		left: 800px;
-		color: #FF6666;
-		font-size: 35px;
-		padding: 0px;
-		border: 0px;
-		margin: 0px;
-	}
-	.div-z-2
-	{
-		font-size: 27px;
-		color: blue;
-		width: 100%;
-	}
+    .div-top-left {
+        width: 50%;
+        height: 40px;
+        position: absolute;
+        top: -30px;
+        left: 85px;
+        line-height: 50px;
+        color: #EEA9B8;
+        font-size: 30px;
+        font-family: STXingkai;
+        letter-spacing: 8px;
+    }
+    
+    .img-logo {
+        width: 80PX;
+        height: 80px;
+        border-radius: 40px;
+        position: relative;
+        right: 40px;
+        bottom: -30px;
+    }
+    
+    .div-top-big {
+        width: 100%;
+        height: 80px;
+        background: url(picture//87162332_p0-test.jpg) no-repeat;
+        background-size: 100%;
+        margin: 0px;
+        border: 0px;
+    }
+    
+    .search {
+        width: 500px;
+        height: 40px;
+        position: absolute;
+        top: 23px;
+        right: 0px;
+        left: 580px;
+    }
+    
+    .input-text {
+        width: 300px;
+        height: 28px;
+        border: 2px solid pink;
+        outline: none;
+        /*border-radius: 10px;*/
+        /*border-top-left-radius: 10px; */
+        /*border-bottom-left-radius: 10px;*/
+    }
+    
+    .input-sub {
+        width: 80px;
+        height: 34px;
+        position: relative;
+        top: 1px;
+        right: 6px;
+        border: 2px;
+        background: #EEA9B8;
+        cursor: pointer;
+        border-radius: 2px;
+        /*border-top-right-radius: 10px; */
+        /*border-bottom-right-radius: 10px;*/
+    }
+    
+    input:focus {
+        /*border-color: blue;*/
+    }
+    /*这里是轮播的设置*/
+    
+    .swiper-container {
+        width: 100%;
+        height: 100%;
+    }
+    
+    .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+        background: #B0E2FF;
+    }
+    
+    .img-big {
+        width: 90%;
+        height: 500px;
+    }
+    
+    .swiper-button-next {
+        background: #B0E2FF;
+    }
+    
+    .swiper-button-prev {
+        background: #B0E2FF;
+    }
+    
+    .swiper-container {
+        background: #B0E2FF;
+    }
+    
+    .swiper-wrapper {
+        background: #B0E2FF;
+    }
+    /*轮播的设置到此为止*/
+    
+    .body-back {
+        background: #B0E2FF;
+        height: 1500px;
+        /*页面的高度在此设置（记得和下面一起设置）----祥龙nb*/
+        margin: 0;
+        padding: 0;
+    }
+    /*这里是页脚的设置*/
+    
+    .div-bottom-big {
+        width: 100%;
+        height: 300px;
+        /*background: #E8FFE8;*/
+        position: absolute;
+        top: 1500px;
+        /*页面的高度在此设置(在这里-设置我)*/
+        text-align: center;
+        background: url(picture//1624000955512.jpg) no-repeat;
+    }
+    
+    .div-bottom-left {
+        width: 50%;
+        height: 300px;
+        font-family: STKaiti;
+        font-size: 23px;
+        /*background: blue;*/
+        position: relative;
+        left: 10px;
+        text-align: center;
+        color: #B0E2FF;
+    }
+    
+    .div-bottom-right {
+        width: 50%;
+        height: 300px;
+        font-family: STKaiti;
+        font-size: 23px;
+        position: relative;
+        bottom: 300px;
+        left: 750px;
+        color: #B0E2FF;
+        /*background: green;*/
+    }
+    
+    a {
+        text-decoration: none;
+    }
+    
+    a:hover {
+        /*background:#00F; */
+        color: #73c9e5;
+    }
+    /*页脚的设置到此为止*/
+    
+    .spe {
+        position: relative;
+        bottom: -15px;
+    }
+    /*这里是最上面的超链接的设置*/
+    
+    .a-top-1 {
+        position: absolute;
+        font-size: 37px;
+        top: 20px;
+        right: 380px;
+        font-family: STXingkai;
+        color: #87CEFF;
+    }
+    
+    .a-top-2 {
+        position: absolute;
+        font-size: 37px;
+        top: 20px;
+        right: 275px;
+        font-family: STXingkai;
+        color: #87CEFF;
+    }
+    
+    .a-top-3 {
+        position: absolute;
+        font-size: 37px;
+        top: 20px;
+        right: 160px;
+        font-family: STXingkai;
+        color: #87CEFF;
+    }
+    
+    .a-top-4 {
+        position: absolute;
+        font-size: 37px;
+        top: 20px;
+        right: 40px;
+        font-family: STXingkai;
+        color: #87CEFF;
+    }
+    /*最上面的超链接的设置到此为止*/
+    
+    .text-zhongjian {
+        font-family: STXingkai;
+        position: relative;
+        top: 150px;
+        color: #FF6666;
+        font-size: 35px;
+    }
+    
+    .a-setting {
+        color: #B0E2FF;
+    }
+    
+    .gu {
+        position: fixed;
+        right: 10px;
+        z-index: 10;
+        font-family: STXingkai;
+        color: #FF6666;
+        font-size: 22px;
+    }
+    
+    .pictur-fix {
+        width: 60px;
+        height: 60px;
+        border-radius: 30px;
+    }
+    
+    .text-zhongjian-1 {
+        width: 50%;
+        font-family: 华文行楷;
+        position: relative;
+        top: 150px;
+        color: #FF6666;
+        font-size: 35px;
+        padding: 0px;
+        border: 0px;
+        margin: 0px;
+    }
+    
+    .div-z-1 {
+        font-size: 27px;
+        color: blue;
+    }
+    
+    .text-zhongjian-2 {
+        width: 40%;
+        font-family: 华文行楷;
+        position: relative;
+        top: -420px;
+        left: 800px;
+        color: #FF6666;
+        font-size: 35px;
+        padding: 0px;
+        border: 0px;
+        margin: 0px;
+    }
+    
+    .div-z-2 {
+        font-size: 27px;
+        color: blue;
+        width: 100%;
+    }
 </style>
+
 <body class="body-back">
-	<div class="div-top-big"> 
-		<div class="div-top-left"><img src="picture//logo.png" class="img-logo"> 心有山海，静而无边。</div>
-	</div>
-	<div class="tets"></div>
-	<a href="" class="a-top-1">导航</a>
-	<a href="" class="a-top-2">主页</a>
-	<a href="" class="a-top-3">登录</a>
-	<a href="" class="a-top-4">更多</a>
-	<form class="search">
-		<input type="text" name="" placeholder="这里是输入搜索内容哒" class="input-text">
-		<input type="submit" name="" value="搜索开始！" class="input-sub">
-	</form>
-	<br>
-	<div>
-		<!-- 这里是轮播的主题 -->
-		<div class="swiper-container">
-			<div class="swiper-wrapper">
-				<div class="swiper-slide">
-					<img src="picture//83066660_p0-test.png" class="img-big"> 
-				</div>
-				<div class="swiper-slide">
-					<img src="picture//84137731_p0-test.png" class="img-big">
-				</div>
-				<div class="swiper-slide">
-					<img src="picture//49440705_p0-jpg.jpg" class="img-big">
-				</div>
-				<div class="swiper-slide">
-					<img src="picture//47004916_p0-test.jpg" class="img-big">
-				</div>
-			</div>
-			<!-- Add Pagination -->
-			<div class="swiper-pagination"></div>
-			<!-- Add Arrows -->
-			<div class="swiper-button-next"></div>
-			<div class="swiper-button-prev"></div>
-		</div>	
-		<!-- 轮播的主体到此结束 -->
-		<!-- 从这里开始！！！！ -->
-		<center>
-			<div class="gu"><img src="picture//62625372-TEST.png" class="pictur-fix"><br>这是祥龙<br>的网站！</div>
-			<div class="text-zhongjian">其实人跟树是一样的，越是向往高处的阳光，它的根就越要伸向黑暗的地底。——- 尼采</div></center>
-			<div class="text-zhongjian-1">
-				<div class="div-z-1">
-					<center><br><br><br>祥龙的学习日记<br></center> 
-				</div>
-				<div class="div-z-1">
-					<center>absolute<br></center> 
-					&nbsp&nbsp  生成绝对定位的元素，相对于 static 定位以外的第一个父元素进行定位。 元素的位置通过 “left”, “top”, “right” 以及 “bottom” 属性进行规定.
-				</div>
-				<div class="div-z-1">
-					<center><br><br>fixed<br></center> 
-					&nbsp&nbsp  生成绝对定位的元素，相对于浏览器窗口进行定位。 元素的位置通过 “left”, “top”, “right” 以及 “bottom” 属性进行规定。
-				</div>
-				<div class="div-z-1">
-					<center><br><br>relative<br></center> 
-					&nbsp&nbsp  生成相对定位的元素，相对于其正常位置进行定位。 因此，”left:20” 会向元素的 LEFT 位置添加 20 像素。
-				</div>
-				<div class="div-z-1">
-					<center><br>&nbsp<br></center> 
-					&nbsp&nbsp  &nbsp
-				</div>
-			</div>
-			<div class="text-zhongjian-2">
-				<div class="div-z-1"><center>有些短小的句子<br></center></div>
-				<div class="div-z-1"><br>山川是不卷收的文章，日月为你掌灯伴读。</div>
-				<div class="div-z-1"><br>我将自己摊成稿纸，让岁月前来点苔。</div>
-				<div class="div-z-1"><br>露从今夜白，月是故乡明。——杜甫《月夜忆舍弟》</div>
-				<div class="div-z-1"><br>生如夏花之辉煌，死如秋叶之静美。——泰戈尔</div>
-				<div class="div-z-1"><br>要一个黄昏，满是风，和正在落下的夕阳。 如果麦子刚好熟了，炊烟恰恰升起那只白鸽贴着水面飞过。 栖息于一棵芦苇而芦苇正好准备了一首曲子如此。 足够我爱这破碎泥泞的人间。	—— 余秀华 《人间》</div>
-			</div>
-			<div class="div-bottom-big">
-				<div class="div-bottom-left">以上就是祥龙的网页
-					<div><br>感谢老师的帮忙<br><br>感谢CSDN网站给予的帮助<br><br>感谢你的观看<br><br>但学习之旅远没有结束，让我们一起共赴下一场山海</div>
-				</div>
-				<div class="div-bottom-right">
-					这里是友情链接~<br><br>
-					<a href="https://www.baidu.com/" class="a-setting">百度一下</a>
-					<br><br>
-					<a href="#" class="a-setting">不知名的网站</a>
-					<br><br>
-					<a href="#" class="a-setting">联系我们</a>
-					<br><br>
-					<a href="#" class="a-setting">更多</a>
-				</div>
-			</div>
+    <div class="div-top-big">
+        <div class="div-top-left"><img src="picture//logo.png" class="img-logo"> 心有山海，静而无边。</div>
+    </div>
+    <div class="tets"></div>
+    <a href="" class="a-top-1">导航</a>
+    <a href="" class="a-top-2">主页</a>
+    <a href="" class="a-top-3">登录</a>
+    <a href="" class="a-top-4">更多</a>
+    <form class="search">
+        <input type="text" name="" placeholder="这里是输入搜索内容哒" class="input-text">
+        <input type="submit" name="" value="搜索开始！" class="input-sub">
+    </form>
+    <br>
+    <div>
+        <!-- 这里是轮播的主题 -->
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="picture//83066660_p0-test.png" class="img-big">
+                </div>
+                <div class="swiper-slide">
+                    <img src="picture//84137731_p0-test.png" class="img-big">
+                </div>
+                <div class="swiper-slide">
+                    <img src="picture//49440705_p0-jpg.jpg" class="img-big">
+                </div>
+                <div class="swiper-slide">
+                    <img src="picture//47004916_p0-test.jpg" class="img-big">
+                </div>
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+            <!-- Add Arrows -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+        <!-- 轮播的主体到此结束 -->
+        <!-- 从这里开始！！！！ -->
+        <center>
+            <div class="gu"><img src="picture//62625372-TEST.png" class="pictur-fix"><br>这是祥龙<br>的网站！</div>
+            <div class="text-zhongjian">其实人跟树是一样的，越是向往高处的阳光，它的根就越要伸向黑暗的地底。——- 尼采</div>
+        </center>
+        <div class="text-zhongjian-1">
+            <div class="div-z-1">
+                <center><br><br><br>祥龙的学习日记<br></center>
+            </div>
+            <div class="div-z-1">
+                <center>absolute<br></center>
+                &nbsp&nbsp 生成绝对定位的元素，相对于 static 定位以外的第一个父元素进行定位。 元素的位置通过 “left”, “top”, “right” 以及 “bottom” 属性进行规定.
+            </div>
+            <div class="div-z-1">
+                <center><br><br>fixed<br></center>
+                &nbsp&nbsp 生成绝对定位的元素，相对于浏览器窗口进行定位。 元素的位置通过 “left”, “top”, “right” 以及 “bottom” 属性进行规定。
+            </div>
+            <div class="div-z-1">
+                <center><br><br>relative<br></center>
+                &nbsp&nbsp 生成相对定位的元素，相对于其正常位置进行定位。 因此，”left:20” 会向元素的 LEFT 位置添加 20 像素。
+            </div>
+            <div class="div-z-1">
+                <center><br>&nbsp<br></center>
+                &nbsp&nbsp &nbsp
+            </div>
+        </div>
+        <div class="text-zhongjian-2">
+            <div class="div-z-1">
+                <center>有些短小的句子<br></center>
+            </div>
+            <div class="div-z-1"><br>山川是不卷收的文章，日月为你掌灯伴读。</div>
+            <div class="div-z-1"><br>我将自己摊成稿纸，让岁月前来点苔。</div>
+            <div class="div-z-1"><br>露从今夜白，月是故乡明。——杜甫《月夜忆舍弟》</div>
+            <div class="div-z-1"><br>生如夏花之辉煌，死如秋叶之静美。——泰戈尔</div>
+            <div class="div-z-1"><br>要一个黄昏，满是风，和正在落下的夕阳。 如果麦子刚好熟了，炊烟恰恰升起那只白鸽贴着水面飞过。 栖息于一棵芦苇而芦苇正好准备了一首曲子如此。 足够我爱这破碎泥泞的人间。 —— 余秀华 《人间》</div>
+        </div>
+        <div class="div-bottom-big">
+            <div class="div-bottom-left">以上就是祥龙的网页
+                <div><br>感谢老师的帮忙<br><br>感谢CSDN网站给予的帮助<br><br>感谢你的观看<br><br>但学习之旅远没有结束，让我们一起共赴下一场山海</div>
+            </div>
+            <div class="div-bottom-right">
+                这里是友情链接~<br><br>
+                <a href="https://www.baidu.com/" class="a-setting">百度一下</a>
+                <br><br>
+                <a href="#" class="a-setting">不知名的网站</a>
+                <br><br>
+                <a href="#" class="a-setting">联系我们</a>
+                <br><br>
+                <a href="#" class="a-setting">更多</a>
+            </div>
+        </div>
 
 
-			<!-- Swiper JS -->
-			<script src="dist/swiper-bundle.min.js"></script>
-			<!-- Initialize Swiper -->
-			<script type="text/javascript">
-				var swiper = new Swiper('.swiper-container', {
-					spaceBetween: 30,
-					centeredSlides: true,
-					autoplay: {
-						delay: 6000,
-						disableOnInteraction: false,
-					},
-					pagination: {
-						el: '.swiper-pagination',
-						clickable: true,
-					},
-					navigation: {
-						nextEl: '.swiper-button-next',
-						prevEl: '.swiper-button-prev',
-					},
-				});
-			</script>
-		</body>
-		</html>
+        <!-- Swiper JS -->
+        <script src="dist/swiper-bundle.min.js"></script>
+        <!-- Initialize Swiper -->
+        <script type="text/javascript">
+            var swiper = new Swiper('.swiper-container', {
+                spaceBetween: 30,
+                centeredSlides: true,
+                autoplay: {
+                    delay: 6000,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+            });
+        </script>
+</body>
+
+</html>
