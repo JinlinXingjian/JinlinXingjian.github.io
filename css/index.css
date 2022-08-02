@@ -3274,6 +3274,14 @@ blockquote footer cite:before {
 #page-header.full_page {
   height: 100vh;
   background-attachment: fixed;
+  -webkit-animation: xl_1 8s linear 1;
+  -moz-animation: xl_1 8s linear 1;
+  -o-animation: xl_1 8s linear 1;
+  -ms-animation: xl_1 8s linear 1;
+  animation: xl_1 8s linear 1;
+  background-position: center 0px;
+  background-repeat: no-repeat;
+  overflow: hidden;
 }
 #page-header.full_page #site-info {
   position: absolute;
@@ -3708,6 +3716,54 @@ blockquote footer cite:before {
 }
 #nav .site-page:not(.child):hover:after {
   width: 100%;
+}
+@-moz-keyframes xl_1 {
+  0% {
+    -webkit-background-size: 130%;
+    -moz-background-size: 130%;
+    background-size: 130%;
+  }
+  100% {
+    -webkit-background-size: 100%;
+    -moz-background-size: 100%;
+    background-size: 100%;
+  }
+}
+@-webkit-keyframes xl_1 {
+  0% {
+    -webkit-background-size: 130%;
+    -moz-background-size: 130%;
+    background-size: 130%;
+  }
+  100% {
+    -webkit-background-size: 100%;
+    -moz-background-size: 100%;
+    background-size: 100%;
+  }
+}
+@-o-keyframes xl_1 {
+  0% {
+    -webkit-background-size: 130%;
+    -moz-background-size: 130%;
+    background-size: 130%;
+  }
+  100% {
+    -webkit-background-size: 100%;
+    -moz-background-size: 100%;
+    background-size: 100%;
+  }
+}
+@keyframes xl_1 {
+  0% {
+    -webkit-background-size: 130%;
+    -moz-background-size: 130%;
+    background-size: 130%;
+  }
+  100% {
+    -webkit-background-size: 100%;
+    -moz-background-size: 100%;
+    background-size: 100%;
+  }
 }
 .loading-bg,
 #loading-box .loading-left-bg,
