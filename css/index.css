@@ -2134,6 +2134,7 @@ blockquote footer cite:before {
   padding: 2rem 15px;
   max-width: 1200px;
   width: 100%;
+  z-index: 5;
 }
 @media screen and (max-width: 900px) {
   .layout {
@@ -3278,11 +3279,11 @@ blockquote footer cite:before {
   background-position: center 0px;
   background-repeat: no-repeat;
   overflow: hidden;
-  -webkit-animation: xl_1 3s ease 1;
-  -moz-animation: xl_1 3s ease 1;
-  -o-animation: xl_1 3s ease 1;
-  -ms-animation: xl_1 3s ease 1;
-  animation: xl_1 3s ease 1;
+  -webkit-animation: xl_1 15s linear 1;
+  -moz-animation: xl_1 15s linear 1;
+  -o-animation: xl_1 15s linear 1;
+  -ms-animation: xl_1 15s linear 1;
+  animation: xl_1 15s linear 1;
 }
 #page-header.full_page #site-info {
   position: absolute;
@@ -3720,11 +3721,11 @@ blockquote footer cite:before {
 }
 @-moz-keyframes xl_1 {
   0% {
-    -webkit-transform: scale(1.2);
-    -moz-transform: scale(1.2);
-    -o-transform: scale(1.2);
-    -ms-transform: scale(1.2);
-    transform: scale(1.2);
+    -webkit-transform: scale(1.5);
+    -moz-transform: scale(1.5);
+    -o-transform: scale(1.5);
+    -ms-transform: scale(1.5);
+    transform: scale(1.5);
   }
   100% {
     -webkit-transform: scale(1);
@@ -3736,11 +3737,11 @@ blockquote footer cite:before {
 }
 @-webkit-keyframes xl_1 {
   0% {
-    -webkit-transform: scale(1.2);
-    -moz-transform: scale(1.2);
-    -o-transform: scale(1.2);
-    -ms-transform: scale(1.2);
-    transform: scale(1.2);
+    -webkit-transform: scale(1.5);
+    -moz-transform: scale(1.5);
+    -o-transform: scale(1.5);
+    -ms-transform: scale(1.5);
+    transform: scale(1.5);
   }
   100% {
     -webkit-transform: scale(1);
@@ -3752,11 +3753,11 @@ blockquote footer cite:before {
 }
 @-o-keyframes xl_1 {
   0% {
-    -webkit-transform: scale(1.2);
-    -moz-transform: scale(1.2);
-    -o-transform: scale(1.2);
-    -ms-transform: scale(1.2);
-    transform: scale(1.2);
+    -webkit-transform: scale(1.5);
+    -moz-transform: scale(1.5);
+    -o-transform: scale(1.5);
+    -ms-transform: scale(1.5);
+    transform: scale(1.5);
   }
   100% {
     -webkit-transform: scale(1);
@@ -3768,11 +3769,11 @@ blockquote footer cite:before {
 }
 @keyframes xl_1 {
   0% {
-    -webkit-transform: scale(1.2);
-    -moz-transform: scale(1.2);
-    -o-transform: scale(1.2);
-    -ms-transform: scale(1.2);
-    transform: scale(1.2);
+    -webkit-transform: scale(1.5);
+    -moz-transform: scale(1.5);
+    -o-transform: scale(1.5);
+    -ms-transform: scale(1.5);
+    transform: scale(1.5);
   }
   100% {
     -webkit-transform: scale(1);
