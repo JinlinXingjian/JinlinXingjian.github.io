@@ -113,6 +113,7 @@
 }
 .snackbar-pos {
   border-radius: 5px !important;/* 弹窗圆角 */
+  text-align: center;
   }
 /*loading 上方胶囊*/
 .pace {

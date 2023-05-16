@@ -41,7 +41,9 @@ window.onload = function () {
         .catch(function(error) {
           console.log('获取访问者地理位置信息失败', error);
         });
-
+        //site-name修改
+        document.querySelector('.site-name').textContent='金鳞星溅'
+        //滚动变灰
         document.querySelector("body").classList.add("indexBgImg")
         window.addEventListener('scroll', function() {
             let scrollTop = window.scrollY;
@@ -57,3 +59,14 @@ window.onload = function () {
         })
     }
 }  
+document.body.oncopy = function (){
+  Snackbar.show({
+    actionText: '关闭',
+    text: '复制成功',
+    backgroundColor: '#e27474',
+    actionTextColor: '#ffffff',
+    pos: 'top-center',
+    duration: '1000',
+    width: '20vw',
+});
+}
