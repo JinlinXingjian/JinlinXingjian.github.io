@@ -1,6 +1,7 @@
 window.onload = function () {
     if (window.location.href == 'http://localhost:4000/' || window.location.href == 'https://jinlinxingjian.top/' || window.location.href == 'https://www.jinlinxingjian.top/') 
     {
+      //获取ip呢
         fetch('https://api.ipbase.com/v1/json/')
         .then(function(response) {
           return response.json();
