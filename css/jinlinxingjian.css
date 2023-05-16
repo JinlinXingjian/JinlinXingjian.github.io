@@ -1,0 +1,274 @@
+/* 波浪css */
+.main-hero-waves-area {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: -11px;
+    z-index: 5;
+  }
+  .waves-area .waves-svg {
+    width: 100%;
+    height: 5rem;
+  }
+  /* Animation */
+  
+  .parallax > use {
+    animation: move-forever 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+  }
+  .parallax > use:nth-child(1) {
+    animation-delay: -2s;
+    animation-duration: 7s;
+    fill: #f7f9febd;
+  }
+  .parallax > use:nth-child(2) {
+    animation-delay: -3s;
+    animation-duration: 10s;
+    fill: #f7f9fe82;
+  }
+  .parallax > use:nth-child(3) {
+    animation-delay: -4s;
+    animation-duration: 13s;
+    fill: #f7f9fe36;
+  }
+  .parallax > use:nth-child(4) {
+    animation-delay: -5s;
+    animation-duration: 20s;
+    fill: #fcf3f2;
+  }
+  /* 黑色模式背景 */
+  [data-theme="dark"] .parallax > use:nth-child(1) {
+    animation-delay: -2s;
+    animation-duration: 7s;
+    fill: #18171dc8;
+  }
+  [data-theme="dark"] .parallax > use:nth-child(2) {
+    animation-delay: -3s;
+    animation-duration: 10s;
+    fill: #18171d80;
+  }
+  [data-theme="dark"] .parallax > use:nth-child(3) {
+    animation-delay: -4s;
+    animation-duration: 13s;
+    fill: #18171d3e;
+  }
+  [data-theme="dark"] .parallax > use:nth-child(4) {
+    animation-delay: -5s;
+    animation-duration: 20s;
+    fill: #18171d;
+  }
+  
+  @keyframes move-forever {
+    0% {
+      transform: translate3d(-90px, 0, 0);
+    }
+    100% {
+      transform: translate3d(85px, 0, 0);
+    }
+  }
+  /*Shrinking for mobile*/
+  @media (max-width: 768px) {
+    .waves-area .waves-svg {
+      height: 40px;
+      min-height: 40px;
+    }
+  }
+
+/*波浪css到此为止*/
+/*卡片选择变色*/
+#recent-posts>.recent-post-item:hover>.recent-post-info>.article-title{
+    color: #e27474;
+}
+/*卡片选择边框颜色和加粗*/
+#recent-posts>.recent-post-item:hover{
+    box-shadow: 0 0 8px 0 rgba(232, 237, 250, .6), 0 2px 4px 0 rgba(232, 237, 250, .5);
+    border:  rgb(226, 116, 116);
+    transition: all 0.5s;
+}
+#recent-posts>.recent-post-item:hover>.post_cover>a>img{
+    animation-duration: 1.2s;
+    animation-delay: 200ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-name: xl_2;
+}
+@keyframes xl_2 {
+  0%{
+      filter: brightness(1);
+  }
+  100%{
+    filter: brightness(0.8);
+  }
+} 
+/* body{
+  cursor: url(https://anzhiy.cn/img/x1.cur),auto;
+} */
+#subtitle{
+  font-family: "华文行楷";
+}
+#loading-box{
+  pointer-events: none !important;
+}
+.main-hero-waves-area{
+  pointer-events: none !important;
+}
+.snackbar-pos {
+  border-radius: 5px !important;/* 弹窗圆角 */
+  }
+/*loading 上方胶囊*/
+.pace {
+  pointer-events: none;
+  user-select: none;
+  z-index: 1001;
+  position: fixed;
+  margin: auto;
+  top: 4px;
+  left: 0;
+  right: 0;
+  height: 8px;
+  border-radius: 8px;
+  width: 6rem;
+  background: #eaecf2;
+  overflow: hidden;
+}
+
+.pace-inactive .pace-progress {
+  opacity: 0;
+  transition: 0.3s ease-in;
+}
+
+.pace.pace-inactive {
+  opacity: 0;
+  transition: 0.3s;
+  top: -8px;
+}
+
+.pace .pace-progress {
+  box-sizing: border-box;
+  transform: translate3d(0, 0, 0);
+  position: fixed;
+  z-index: 2;
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 100%;
+  height: 100%;
+  width: 100%;
+  background: #49b1f5;
+  background: linear-gradient(
+    to right,
+    rgb(18, 194, 233),
+    rgb(196, 113, 237),
+    rgb(246, 79, 89)
+  );
+  animation: gradient 2s ease infinite;
+  background-size: 200%;
+}
+/*导航栏居中*/
+#nav{
+  justify-content: center;
+  position: relative;
+}
+#blog-info{
+  max-width: 250px;
+  position: absolute !important;
+  left: 30px;
+}
+@media screen and (max-width: 400px){
+  #menus{
+    position: absolute !important;
+    right: 30px !important;
+  }
+}
+@media screen and (max-width: 400px){
+  #search-button{
+    display: none !important;
+  }
+}
+#nav *::after{
+  background-color: transparent!important;
+}
+/*导航栏子项目横向展开*/
+.menus_item_child li:not(#sidebar-menus li){
+  float: left;
+  border-radius: 6px!important;
+}
+.menus_item_child:not(#sidebar-menus ul){
+/*
+  left:calc(-150%)!important;这是估算值，为了保持元素居中的，如果不合适可以自己调
+改为：*/
+left:50%;
+translate:-50%;
+}
+:root{
+  --zxl-theme:#e27474 /*我的主题色*/
+}
+/*nav颜色异常修改*/
+#nav>span>a{
+  color: #4c4948 !important;
+}
+#nav>div>div>a{
+  color: #4c4948 !important;
+}
+#nav{
+  position: fixed;
+  top: 0px;
+  background-color: rgba(252,243,242,0.6);
+  backdrop-filter: blur(20px);
+}
+/*宽屏适配*/
+body{
+  scroll-behavior:smooth;
+}
+.layout{
+  max-width:100vw;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+@media screen and (max-width: 400px){
+  .layout{
+    max-width: 1400px;
+    padding: 0;
+  }
+}
+.aside-content{
+  width: 100px;
+}
+/*nav按钮点击特效*/
+.menus_item{
+  margin: 5px;
+  transition: all .5s ease 0s;
+  padding-right:  5px !important;
+  border-radius: 20px;
+}
+.menus_item:hover{
+  background-color: var(--zxl-theme);
+}
+@media screen and (max-width: 400px) {
+  .menus_item:hover{
+    background-color: transparent;
+  }
+}
+#search-button{
+  position: absolute;
+  right: 30px;
+  transition: all .5s ease 0s;
+  padding-right:  10px !important;
+  border-radius: 10px;
+}
+#search-button:hover{
+  background-color: var(--zxl-theme);
+}
+/*首屏颜色灰的解决方案*/
+#page-header:not(.not-top-img):before{
+  background-color: rgba(1, 1, 1,0);
+}
+/*首屏背景壁纸设置*/
+.indexBgImg{
+  background-image: url(https://jinlinxingjian.top/img/%E5%B5%AF%E5%B3%A8.png);
+  background-size: cover;
+  background-attachment:fixed;
+  background-position:center center;
+}
+#page-header{
+  transition: none;
+}
