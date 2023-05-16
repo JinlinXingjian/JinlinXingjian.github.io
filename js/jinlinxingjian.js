@@ -1,33 +1,46 @@
 window.onload = function () {
-    
-    fetch('https://api64.ipify.org?format=json')
-    .then(function(response) {
-      return response.json();
-    })
-    .then(function(data) {
-      var ipAddress = data.ip;
-  
-      // 在这里可以使用获取到的IP地址进行进一步的处理
-      console.log('访问者的IP地址：', ipAddress);
-    })
-    .catch(function(error) {
-      console.log('获取访问者IP地址失败', error);
-    });
-  
-
-
-
     if (window.location.href == 'http://localhost:4000/' || window.location.href == 'https://jinlinxingjian.top/' || window.location.href == 'https://www.jinlinxingjian.top/') 
     {
-        Snackbar.show({
-            actionText: '关闭',
-            text: '欢迎来到 金鳞星溅 的小站',
-            backgroundColor: '#e27474',
-            actionTextColor: '#ffffff',
-            pos: 'bottom-center',
-            duration: '2000',
-            width: '100vw'
+        fetch('https://api.ipbase.com/v1/json/')
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          var city = data.city;
+          var country = data.country_name;
+          let line
+          if(country=="China"){
+            line="腾讯云线路"
+          }
+          else{
+            line="GIthub pages线路"
+          }
+          let text='欢迎来到 金鳞星溅 的小站,你访问的线路是'+line
+          Snackbar.show({
+              actionText: '关闭',
+              text: text,
+              backgroundColor: '#e27474',
+              actionTextColor: '#ffffff',
+              pos: 'bottom-center',
+              duration: '2000',
+              width: '60vw'
+          });
+          // 找到目标元素
+          var footerWrap = document.getElementById('footer-wrap');
+          var footerCustomText = footerWrap.querySelector('.footer_custom_text');
+
+          // 创建 <div> 元素
+          var divElement = document.createElement('div');
+          divElement.textContent = '当前访问线路是'+line;
+
+          // 将 <div> 元素插入到目标元素中
+          footerCustomText.appendChild(divElement);
+
+        })
+        .catch(function(error) {
+          console.log('获取访问者地理位置信息失败', error);
         });
+
         document.querySelector("body").classList.add("indexBgImg")
         window.addEventListener('scroll', function() {
             let scrollTop = window.scrollY;
