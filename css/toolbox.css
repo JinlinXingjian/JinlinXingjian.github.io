@@ -14,3 +14,11 @@ button{
 #news>a>img{
     width: 50%;
 }
+@media screen and (max-width: 768px){
+    #news>a>img{
+        width: 100%;
+    }
+    .layout > div:first-child:not(.recent-posts) {
+    padding: 36px 0px;
+    }
+}
