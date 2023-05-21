@@ -1,8 +1,9 @@
 window.onload = function () {
     if (window.location.href == 'http://localhost:4000/' || window.location.href == 'https://jinlinxingjian.top/' || window.location.href == 'https://www.jinlinxingjian.top/') 
     {
+      
       //获取ip呢
-        fetch('https://api.ipbase.com/v1/json/')
+        fetch('http://ip-api.com/json/')
         .then(function(response) {
           return response.json();
         })
@@ -10,6 +11,8 @@ window.onload = function () {
           var city = data.city;
           var country = data.country_name;
           let line
+
+
           if(country=="China"){
             line="腾讯云线路"
           }
@@ -58,6 +61,10 @@ window.onload = function () {
             document.querySelector("#content-inner").style.backdropFilter="brightness("+scrollPercent+")";
         })
     }
+    
+/* <![CDATA[ */
+var l2d = {"xb":"https:\/\/luotianyi.vc\/wp-content\/plugins\/live2d-2233","move":"","mobile":"1","r18":""};
+/* ]]> */
 }  
 document.body.oncopy = function (){
   Snackbar.show({
