@@ -62,9 +62,6 @@ window.onload = function () {
         })
     }
     
-/* <![CDATA[ */
-var l2d = {"xb":"https:\/\/luotianyi.vc\/wp-content\/plugins\/live2d-2233","move":"","mobile":"1","r18":""};
-/* ]]> */
 }  
 document.body.oncopy = function (){
   Snackbar.show({
