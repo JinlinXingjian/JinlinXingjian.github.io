@@ -556,6 +556,17 @@ document.addEventListener('DOMContentLoaded', function () {
       else window.mobileToc.close()
     }
   }
+  
+  setTimeout(function() {
+    document.getElementsByClassName('pio-night')[0].addEventListener("click", function() {
+      rightSideFn.switchDarkMode();
+    });
+  }, 3000);
+  
+  
+
+  
+
 
   document.getElementById('rightside').addEventListener('click', function (e) {
     const $target = e.target.id ? e.target : e.target.parentNode
@@ -825,3 +836,5 @@ document.addEventListener('DOMContentLoaded', function () {
   refreshFn()
   unRefreshFn()
 })
+
+
