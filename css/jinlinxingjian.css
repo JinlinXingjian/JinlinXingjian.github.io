@@ -99,9 +99,9 @@
     filter: brightness(0.8);
   }
 } 
-/* body{
-  cursor: url(https://anzhiy.cn/img/x1.cur),auto;
-} */
+body{
+  cursor: url(../img/cursor/Normal.cur),auto;
+}
 #subtitle{
   font-family: "华文行楷";
 }
