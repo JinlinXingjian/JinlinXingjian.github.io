@@ -37,8 +37,8 @@ const initConfig = {
   },
   night: "toggleNightMode()",
   model: [
-    "live2d/Diana/Diana.model3.json",
-    "live2d/Ava/Ava.model3.json",
+    "/live2d/Diana/Diana.model3.json",
+    "/live2d/Ava/Ava.model3.json",
   ],
   tips: true,
   onModelLoad: onModelLoad
@@ -227,4 +227,6 @@ function onModelLoad(model) {
 
 
 var pio_reference
-window.onload = 加载圣·嘉然
+setTimeout(() => {
+  加载圣·嘉然()
+}, 2000);

@@ -61,8 +61,7 @@ window.onload = function () {
             document.querySelector("#content-inner").style.backdropFilter="brightness("+scrollPercent+")";
             document.querySelector('#footer-wrap').style.backdropFilter="brightness("+scrollPercent+")";
         })
-        //加载 嘉然
-        加载圣·嘉然();
+
     }
     
 }  
