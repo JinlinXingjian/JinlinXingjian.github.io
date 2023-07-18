@@ -261,6 +261,7 @@ body{
 }
 /*首屏颜色灰的解决方案*/
 #page-header:not(.not-top-img):before{
+  backdrop-filter: blur(20px);
   background-color: rgba(1, 1, 1,0);
 }
 /*首屏背景壁纸设置*/
