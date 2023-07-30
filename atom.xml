@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>金鳞星溅的个人博客</title>
+  
+  <subtitle>分享知识就是乐趣</subtitle>
+  <link href="https://jinlinxingjian.top/atom.xml" rel="self"/>
+  
+  <link href="https://jinlinxingjian.top/"/>
+  <updated>2023-06-14T04:00:47.576Z</updated>
+  <id>https://jinlinxingjian.top/</id>
+  
+  <author>
+    <name>祥龙</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>await axios竟然返回undefined？（已解决）</title>
+    <link href="https://jinlinxingjian.top/27885b29becc/"/>
+    <id>https://jinlinxingjian.top/27885b29becc/</id>
+    <published>2023-06-14T03:50:54.000Z</published>
+    <updated>2023-06-14T04:00:47.576Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="现象">现象</h2><p>昨天写vue的时候，使用await axios 竟然返回了undefined？</p><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">//1.组件挂载就开始请求后端api</span><span class="token keyword">const</span> res <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">getCourseListAPI</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment">//2.getCourseListAPI()方法</span><span class="token keyword">export</span> <span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">getCourseListAPI</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>     <span class="token keyword">const</span> res<span class="token operator">=</span><span class="token keyword">await</span> http<span class="token punctuation">.</span><span class="token function">post</span><span class="token punctuation">(</span><span class="token string">'/get_course_list'</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>    <span class="token keyword">return</span>  res  <span class="token punctuation">&#125;</span>    <span class="token comment">//3.http封装</span><span class="token keyword">import</span> axios <span class="token keyword">from</span> <span class="token string">'axios'</span><span class="token punctuation">;</span><span class="token keyword">export</span> <span class="token keyword">const</span> baseURL <span class="token operator">=</span> <span class="token string">'http://localhost'</span><span class="token punctuation">;</span><span class="token comment">// 创建axios实例</span><span class="token keyword">const</span> http <span class="token operator">=</span> axios<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>  <span class="token literal-property property">baseURL</span><span class="token operator">:</span> baseURL<span class="token punctuation">,</span>  <span class="token literal-property property">timeout</span><span class="token operator">:</span> <span class="token number">5000</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// axios响应拦截器</span>http<span class="token punctuation">.</span>interceptors<span class="token punctuation">.</span>response<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>  <span class="token parameter">response</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>    <span class="token keyword">return</span> response<span class="token punctuation">.</span>data<span class="token punctuation">;</span>  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>  <span class="token parameter">error</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>error<span class="token punctuation">.</span>response<span class="token punctuation">.</span>status<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token keyword">if</span> <span class="token punctuation">(</span>error<span class="token punctuation">.</span>response<span class="token punctuation">.</span>status <span class="token operator">===</span> <span class="token number">401</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>      <span class="token function">ElMessage</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>        <span class="token literal-property property">message</span><span class="token operator">:</span> <span class="token string">'未登录,请先登录'</span><span class="token punctuation">,</span>        <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token string">'error'</span><span class="token punctuation">,</span>      <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>      <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>              <span class="token comment">// 未授权，跳转到登录页面</span>      <span class="token comment">// window.location.href = '/login';</span>      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token number">1500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token punctuation">&#125;</span>    <span class="token keyword">return</span> Promise<span class="token punctuation">.</span><span class="token function">reject</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h2 id="追溯起源">追溯起源</h2><ol><li class="lvl-3"><p>首先是res为undefined</p></li><li class="lvl-3"><p>追踪到getCourseListAPI()内部，发现内容的res也是undefined</p></li><li class="lvl-3"><p>但在f12的控制台的网络面板中发现数据是成功的获取到了的，说明数据在中间丢失了</p></li><li class="lvl-3"><p>axios的请求是，先由axios实例发出，请求拦截器拦截，响应拦截器拦截，返回到axios实例</p></li><li class="lvl-3"><p>深入到响应拦截器中，逐个探查</p><pre class="line-numbers language-none"><code class="language-none">response &#x3D;&gt; &#123;  return response.data;&#125;,<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p>在这里，发现response.data不是一个响应对象，response才是正确的响应对象，响应拦截器将一个非响应对象返回给axios实例，await解析出来就是undefined</p></li></ol><h2 id="解决方案">解决方案</h2><p>将 return response.data 修改为 return response即可</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;现象&quot;&gt;现象&lt;/h2&gt;
+&lt;p&gt;昨天写vue的时候，使用await axios 竟然返回了undefined？&lt;/p&gt;
+&lt;pre class=&quot;line-numbers language-javascript&quot; data-language=&quot;javascript&quot;&gt;</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>为你的Hexo加个好看的footer吧</title>
+    <link href="https://jinlinxingjian.top/0d63fc06a48b/"/>
+    <id>https://jinlinxingjian.top/0d63fc06a48b/</id>
+    <published>2023-06-03T12:30:15.000Z</published>
+    <updated>2023-06-03T12:43:08.597Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="效果一览">效果一览</h2><img src="./../img/post/为你的Hexo加个好看的footer吧/image-20230603203135032.png" alt="image-20230603203135032" style="zoom: 33%;" /><h2 id="起因">起因</h2><p>早就想换个好看的footer了，苦于没有好的idea，今日无聊在codepen上闲逛，发现一个好看的footer，链接在这里</p><p><a href="https://codepen.io/z-/pen/zYxdRQy">CSS Goey footer (codepen.io)</a></p><img src="./../img/post/为你的Hexo加个好看的footer吧/image-20230603203430663.png" alt="image-20230603203430663" style="zoom: 33%;" /><p>原来的效果是这样的，我稍加修改了一下</p><h2 id="教程">教程</h2><blockquote><p>tips: 本教程适用于hexo的butterfly主题4.7.0版本，不同版本请适当修改</p></blockquote><h3 id="修改pug文件">修改pug文件</h3><p>打开位于 butterfly\layout\includes\footer.pug文件，清空里面所有内容（请自己保存原内容），然后粘贴下面的代码</p><pre class="line-numbers language-pug" data-language="pug"><code class="language-pug"><span class="token tag"><span class="token attr-id">#footer-wrap</span></span>  <span class="token tag">div<span class="token attr-class">.footer</span></span>    <span class="token tag">div<span class="token attr-class">.bubbles</span></span>      <span class="token punctuation">-</span><span class="token code"> <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">128</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span></span>        <span class="token tag">div<span class="token attr-class">.bubble</span><span class="token attributes"><span class="token punctuation">(</span><span class="token attr-name">style</span><span class="token punctuation">=</span><span class="token attr-value">`<span class="token operator">--</span>size<span class="token operator">:</span>$<span class="token punctuation">&#123;</span><span class="token number">2</span><span class="token operator">+</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span></span><span class="token punctuation">)</span></span></span>*4&#125;rem; <span class="token punctuation">--</span>distance:$&#123;6+Math<span class="token punctuation">.</span>random()*4&#125;rem; <span class="token punctuation">--</span>position:$&#123;<span class="token punctuation">-</span>5+Math<span class="token punctuation">.</span>random()*110&#125;%; <span class="token punctuation">--</span>time:$&#123;2+Math<span class="token punctuation">.</span>random()*2&#125;s; <span class="token punctuation">--</span>delay:$&#123;<span class="token punctuation">-</span>1*(2+Math<span class="token punctuation">.</span>random()*2)&#125;s;`)    <span class="token tag">div<span class="token attr-class">.content</span></span>      <span class="token flow-control"><span class="token branch keyword">if</span> theme<span class="token punctuation">.</span>footer<span class="token punctuation">.</span>copyright</span>        <span class="token tag"><span class="token attr-class">.framework-info</span></span>          <span class="token tag">span</span><span class="token punctuation">=</span><span class="token code"> <span class="token function">_p</span><span class="token punctuation">(</span><span class="token string">'footer.framework'</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">' '</span></span>          <span class="token tag">a<span class="token attributes"><span class="token punctuation">(</span><span class="token attr-name">href</span><span class="token punctuation">=</span><span class="token attr-value"><span class="token string">'https://hexo.io'</span></span><span class="token punctuation">)</span></span></span><span class="token punctuation">=</span><span class="token code"> <span class="token string">'Hexo'</span></span>          <span class="token tag">span<span class="token attr-class">.footer-separator</span></span> <span class="token plain-text">|</span>          <span class="token tag">span</span><span class="token punctuation">=</span><span class="token code"> <span class="token function">_p</span><span class="token punctuation">(</span><span class="token string">'footer.theme'</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">' '</span></span>          <span class="token tag">a<span class="token attributes"><span class="token punctuation">(</span><span class="token attr-name">href</span><span class="token punctuation">=</span><span class="token attr-value"><span class="token string">'https://github.com/jerryc127/hexo-theme-butterfly'</span></span><span class="token punctuation">)</span></span></span><span class="token punctuation">=</span><span class="token code"> <span class="token string">'Butterfly'</span></span>      <span class="token flow-control"><span class="token branch keyword">if</span> theme<span class="token punctuation">.</span>footer<span class="token punctuation">.</span>custom_text</span>        <span class="token tag"><span class="token attr-class">.footer_custom_text</span></span><span class="token punctuation">!=</span><span class="token code"><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span>theme<span class="token punctuation">.</span>footer<span class="token punctuation">.</span>custom_text<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token template-punctuation string">`</span></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="修改fotter-styl文件">修改fotter.styl文件</h3><p>打开位于butterfly\source\css_layout\footer.styl文件，清空里面所有内容（请自己保存原内容），然后粘贴下面的代码</p><pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token selector">#footer  position: relative  background-color: $light-blue  background-attachment: scroll  background-position: bottom  background-size: cover  background: transparent  if hexo-config('footer_bg') != false    &amp;:before      position: absolute      width: 100%      height: 100%      background-color: alpha($dark-black, .5)      content: ''#footer-wrap</span> <span class="token punctuation">&#123;</span>  <span class="token selector">display: grid  grid-template-rows: 1fr 10rem auto  grid-template-areas: "main" "." "footer"  overflow-x: hidden  background: transparent  font-family: 'Open Sans', sans-serif  .footer</span> <span class="token punctuation">&#123;</span>    <span class="token selector">z-index: 1    --footer-background: #ed5565    display: grid    position: relative    grid-area: footer    min-height: 12rem    .bubbles</span> <span class="token punctuation">&#123;</span>      <span class="token property">position</span><span class="token punctuation">:</span> absolute      <span class="token property">top</span><span class="token punctuation">:</span> 0      <span class="token property">left</span><span class="token punctuation">:</span> 0      <span class="token property">right</span><span class="token punctuation">:</span> 0      <span class="token property">height</span><span class="token punctuation">:</span> 1rem      <span class="token property">background</span><span class="token punctuation">:</span> <span class="token function">var</span><span class="token punctuation">(</span>--footer-background<span class="token punctuation">)</span>      <span class="token property">filter</span><span class="token punctuation">:</span> <span class="token url"><span class="token function">url</span><span class="token punctuation">(</span><span class="token string url">"#blob"</span><span class="token punctuation">)</span></span>      <span class="token selector">.bubble</span> <span class="token punctuation">&#123;</span>        <span class="token property">position</span><span class="token punctuation">:</span> absolute        <span class="token property">left</span><span class="token punctuation">:</span> <span class="token function">var</span><span class="token punctuation">(</span>--position<span class="token punctuation">,</span> 50%<span class="token punctuation">)</span>        <span class="token property">background</span><span class="token punctuation">:</span> <span class="token function">var</span><span class="token punctuation">(</span>--footer-background<span class="token punctuation">)</span>        <span class="token property">border-radius</span><span class="token punctuation">:</span> 100%        <span class="token property">animation</span><span class="token punctuation">:</span> bubble-size <span class="token function">var</span><span class="token punctuation">(</span>--time<span class="token punctuation">,</span> 4s<span class="token punctuation">)</span> ease-in infinite <span class="token function">var</span><span class="token punctuation">(</span>--delay<span class="token punctuation">,</span> 0s<span class="token punctuation">)</span><span class="token punctuation">,</span> bubble-move <span class="token function">var</span><span class="token punctuation">(</span>--time<span class="token punctuation">,</span> 4s<span class="token punctuation">)</span> ease-in infinite <span class="token function">var</span><span class="token punctuation">(</span>--delay<span class="token punctuation">,</span> 0s<span class="token punctuation">)</span>        <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">translate</span><span class="token punctuation">(</span>-50%<span class="token punctuation">,</span> 100%<span class="token punctuation">)</span>      <span class="token punctuation">&#125;</span>    <span class="token punctuation">&#125;</span>    <span class="token selector">.content</span> <span class="token punctuation">&#123;</span>      <span class="token selector">z-index: 2      display:  flex      flex-direction: column      padding: 2rem      background: var(--footer-background)      text-align: center      color: white      a,      p</span> <span class="token punctuation">&#123;</span>        <span class="token property">color</span><span class="token punctuation">:</span> #F5F7FA        <span class="token property">text-decoration</span><span class="token punctuation">:</span> none      <span class="token punctuation">&#125;</span>      <span class="token selector">b</span> <span class="token punctuation">&#123;</span>        <span class="token property">color</span><span class="token punctuation">:</span> white      <span class="token punctuation">&#125;</span>      <span class="token selector">p</span> <span class="token punctuation">&#123;</span>        <span class="token property">margin</span><span class="token punctuation">:</span> 0        <span class="token property">font-size</span><span class="token punctuation">:</span> .75rem      <span class="token punctuation">&#125;</span>    <span class="token punctuation">&#125;</span>  <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token atrule"><span class="token rule">@keyframes</span> bubble-size</span> <span class="token punctuation">&#123;</span>  <span class="token selector">0%, 75%</span> <span class="token punctuation">&#123;</span>    <span class="token property">width</span><span class="token punctuation">:</span> <span class="token function">var</span><span class="token punctuation">(</span>--size<span class="token punctuation">,</span> 4rem<span class="token punctuation">)</span>    <span class="token property">height</span><span class="token punctuation">:</span> <span class="token function">var</span><span class="token punctuation">(</span>--size<span class="token punctuation">,</span> 4rem<span class="token punctuation">)</span>  <span class="token punctuation">&#125;</span>  <span class="token selector">100%</span> <span class="token punctuation">&#123;</span>    <span class="token property">width</span><span class="token punctuation">:</span> 0rem    <span class="token property">height</span><span class="token punctuation">:</span> 0rem  <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token atrule"><span class="token rule">@keyframes</span> bubble-move</span> <span class="token punctuation">&#123;</span>  <span class="token selector">0%</span> <span class="token punctuation">&#123;</span>    <span class="token property">bottom</span><span class="token punctuation">:</span> -4rem  <span class="token punctuation">&#125;</span>  <span class="token selector">100%</span> <span class="token punctuation">&#123;</span>    <span class="token property">bottom</span><span class="token punctuation">:</span> <span class="token function">var</span><span class="token punctuation">(</span>--distance<span class="token punctuation">,</span> 10rem<span class="token punctuation">)</span>  <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><blockquote><p>tips：有任何问题在评论区留言哦~</p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;效果一览&quot;&gt;效果一览&lt;/h2&gt;
+&lt;img src=&quot;./../img/post/为你的Hexo加个好看的footer吧/image-20230603203135032.png&quot; alt=&quot;image-20230603203135032&quot; style=&quot;zoom: </summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>给你的github个人主页加一个贪吃蛇commit</title>
+    <link href="https://jinlinxingjian.top/9aa03df74b03/"/>
+    <id>https://jinlinxingjian.top/9aa03df74b03/</id>
+    <published>2023-05-16T11:35:58.000Z</published>
+    <updated>2023-05-16T11:56:36.482Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="效果图">效果图</h2><img src="./../img/post/给你的github个人主页加一个贪吃蛇commit/github-contribution-grid-snake.svg" style="zoom:67%;" /><p>这是开发者大佬的github主页</p><img src="./../img/post/给你的github个人主页加一个贪吃蛇commit/image-20230516193849346.png" alt="image-20230516193849346" style="zoom: 50%;" /><h2 id="教程">教程</h2><h3 id="1-新建一个与你GitHub用户名同名的仓库">1.新建一个与你GitHub用户名同名的仓库</h3><p>此步骤略</p><h3 id="2-进入action">2.进入action</h3><img src="./../img/post/给你的github个人主页加一个贪吃蛇commit/image-20230516194224640.png" alt="image-20230516194224640" style="zoom:50%;" /><h3 id="3-新建workflow">3.新建workflow</h3><img src="./../img/post/给你的github个人主页加一个贪吃蛇commit/image-20230516194425241.png" alt="image-20230516194425241" style="zoom:50%;" /><p>填入你的GitHub用户名</p><img src="./../img/post/给你的github个人主页加一个贪吃蛇commit/image-20230516194506566.png" alt="image-20230516194506566" style="zoom:50%;" /><p>选择configure</p><img src="./../img/post/给你的github个人主页加一个贪吃蛇commit/image-20230516194626301.png" alt="image-20230516194626301" style="zoom:67%;" /><h3 id="4-填写代码">4.填写代码</h3><p>你应该会看到这个页面</p><img src="./../img/post/给你的github个人主页加一个贪吃蛇commit/image-20230516194755614.png" alt="image-20230516194755614" style="zoom:67%;" /><p>去掉原来的所有内容，填入以下内容</p><pre class="line-numbers language-github" data-language="github"><code class="language-github"># GitHub Action for generating a contribution graph with a snake eating your contributions.name: Generate Snakeon:  schedule:    - cron: &quot;0 0 * * *&quot;  workflow_dispatch:jobs:  build:    runs-on: ubuntu-latest    steps:      - name: Checkout        uses: actions&#x2F;checkout@v2.3.4            - name: Generate Snake        uses: Platane&#x2F;snk@master        id: snake-gif        with:          github_user_name: $&#123;&#123; github.repository_owner &#125;&#125;          gif_out_path: .&#x2F;assets&#x2F;github-contribution-grid-snake.gif          svg_out_path: .&#x2F;assets&#x2F;github-contribution-grid-snake.svg      - name: Push to GitHub        uses: EndBug&#x2F;add-and-commit@v7.2.1        with:          branch: main          message: &#39;Generate Contribution Snake&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><img src="./../img/post/%E7%BB%99%E4%BD%A0%E7%9A%84github%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5%E5%8A%A0%E4%B8%80%E4%B8%AA%E8%B4%AA%E5%90%83%E8%9B%87commit/image-20230516194917314.png" alt="image-20230516194917314"></p><h2 id="5-运行">5.运行</h2><img src="./../img/post/给你的github个人主页加一个贪吃蛇commit/image-20230516195002555.png" alt="image-20230516195002555" style="zoom:67%;" /><p>回到action页面，点击运行即可</p><h2 id="6-为REDAME-md加上贪吃蛇图片">6.为REDAME.md加上贪吃蛇图片</h2><p>在你的仓库的REDAME.md文件中加入以下内容</p><pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown">![](https://raw.githubusercontent.com/你的GitHub用户名/你的GitHub用户名/main/assets/github-contribution-grid-snake.svg)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h2 id="7-成功">7.成功</h2><img src="./../img/post/给你的github个人主页加一个贪吃蛇commit/image-20230516195320000.png" alt="image-20230516195320000" style="zoom:80%;" />]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;效果图&quot;&gt;效果图&lt;/h2&gt;
+&lt;img src=&quot;./../img/post/给你的github个人主页加一个贪吃蛇commit/github-contribution-grid-snake.svg&quot; style=&quot;zoom:67%;&quot; /&gt;
+&lt;p&gt;这是开发者大佬的</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>介绍两个好用的ChatGPT插件</title>
+    <link href="https://jinlinxingjian.top/95ef830417b0/"/>
+    <id>https://jinlinxingjian.top/95ef830417b0/</id>
+    <published>2023-04-30T09:17:59.000Z</published>
+    <updated>2023-05-16T08:00:31.766Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="简介">简介</h2><p>介绍两个在edge浏览器中加强ChatGPT体验的插件</p><h2 id="KeepChatGPT">KeepChatGPT</h2><p>官网介绍：ChatGPT畅聊插件。解决所有报错，让我们的AI体验无比顺畅、丝滑、高效。</p><img src="./../img/post/edge中ChatGPT长链接插件和渲染latex文本插件/image-20230501105016448.png" alt="image-20230501105016448" style="zoom:50%;" /><p>在日常使用ChatGPT中，总是出现错误需要刷新页面，安装此插件后解决问题</p><h3 id="安装方法">安装方法</h3><p>​进入下载页面</p><p><a href="https://greasyfork.org/zh-CN/scripts/462804-keepchatgpt">KeepChatGPT (greasyfork.org)</a></p><img src="./../img/post/edge中ChatGPT长链接插件和渲染latex文本插件/image-20230501104856628.png" alt="image-20230501104856628" style="zoom:33%;" /><p>点击安装（我已经安装了，所以是重新安装）</p><h2 id="让ChatGPT正确渲染latex代码">让ChatGPT正确渲染latex代码</h2><img src="./../img/post/edge中ChatGPT长链接插件和渲染latex文本插件/image-20230501105030405.png" alt="image-20230501105030405" style="zoom:50%;" /><h2 id="安装方法-2">安装方法</h2><p>进入下载链接</p><p><a href="https://chrome.google.com/webstore/detail/tex-all-the-things/cbimabofgmfdkicghcadidpemeenbffn">TeX All the Things - Chrome 应用商店 (google.com)</a></p><img src="./../img/post/edge中ChatGPT长链接插件和渲染latex文本插件/image-20230501105115585.png" alt="image-20230501105115585" style="zoom:50%;" /><p>点击安装（或者是获取），我已经安装了，所以是删除。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;简介&quot;&gt;简介&lt;/h2&gt;
+&lt;p&gt;介绍两个在edge浏览器中加强ChatGPT体验的插件&lt;/p&gt;
+&lt;h2 id=&quot;KeepChatGPT&quot;&gt;KeepChatGPT&lt;/h2&gt;
+&lt;p&gt;官网介绍：ChatGPT畅聊插件。解决所有报错，让我们的AI体验无比顺畅、丝滑、高效。&lt;</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>AI绘画vol-1</title>
+    <link href="https://jinlinxingjian.top/53fb20b8216f/"/>
+    <id>https://jinlinxingjian.top/53fb20b8216f/</id>
+    <published>2023-04-22T07:12:15.000Z</published>
+    <updated>2023-04-22T07:36:02.874Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="原因">原因</h2><p>记录一下，我的AI绘画炼丹供大家参考</p><h2 id="粉色夕阳背景">粉色夕阳背景</h2><img src="https://jinlinxingjian.top/img/stable%20diffusion/2023-4-22/stable%20diffusion_20230423%20(1).png" alt="image-20230422151438756" style="zoom: 80%;" /><img src="https://jinlinxingjian.top/img/stable%20diffusion/2023-4-22/stable%20diffusion_20230423%20(15).png" alt="image-20230422151438756" style="zoom: 80%;" /><p>这个是粉色夕阳的图像，关键tag在这里</p><pre class="line-numbers language-none"><code class="language-none">(Pink cloud:1.5),(sunset:1.3),(golden hour lighting:1.3),<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>加入海报lora后</p><img src="https://jinlinxingjian.top/img/stable%20diffusion/2023-4-22/stable%20diffusion_20230423%20(2).png" alt="image-20230422151438756" style="zoom: 80%;" /><p>加入一些其他样式后</p><img src="https://jinlinxingjian.top/img/stable%20diffusion/2023-4-22/stable%20diffusion_20230423%20(3).png" alt="image-20230422151438756" style="zoom: 80%;" /><img src="https://jinlinxingjian.top/img/stable%20diffusion/2023-4-22/stable%20diffusion_20230423%20(14).png" alt="image-20230422151438756" style="zoom: 50%;" /><p>完整tag在这里</p><pre class="line-numbers language-none"><code class="language-none">best quality ,masterpiece, illustration, an extremely delicate and beautiful, extremely detailed ,CG ,unity ,8k wallpaper, Amazing, finely detail, masterpiece,best quality,official art,extremely detailed CG unity 8k wallpaper,absurdres, incredibly absurdres,(Pink cloud:1.5),(sunset:1.3),(golden hour lighting:1.3),beautiful detailed eyes,extremely detailed face, perfect lighting,light on face,cool lighting,natural colors,1girl, two tone hair, void, space,blue flower, pink flower, &lt;lora:平面设计:1&gt;,cover<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h2 id="塔罗牌lora">塔罗牌lora</h2><p>塔罗牌lora效果非常好，几乎都是一次出图，下面这两张是横版的</p><img src="https://jinlinxingjian.top/img/stable%20diffusion/2023-4-22/stable%20diffusion_20230423%20(4).png" alt="image-20230422151438756" style="zoom: 67%;" /><img src="https://jinlinxingjian.top/img/stable%20diffusion/2023-4-22/stable%20diffusion_20230423%20(5).png" alt="image-20230422151438756" style="zoom: 67%;" /><p>接下来是竖版的测试</p><img src="https://jinlinxingjian.top/img/stable%20diffusion/2023-4-22/stable%20diffusion_20230423%20(6).png" alt="image-20230422151438756" style="zoom: 67%;" /><img src="https://jinlinxingjian.top/img/stable%20diffusion/2023-4-22/stable%20diffusion_20230423%20(7).png" alt="image-20230422151438756" style="zoom: 67%;" /><img src="https://jinlinxingjian.top/img/stable%20diffusion/2023-4-22/stable%20diffusion_20230423%20(8).png" alt="image-20230422151438756" style="zoom: 67%;" /><img src="https://jinlinxingjian.top/img/stable%20diffusion/2023-4-22/stable%20diffusion_20230423%20(9).png" alt="image-20230422151438756" style="zoom: 67%;" /><p>效果很好，然后我尝试着加入了漫画风格的lora</p><img src="https://jinlinxingjian.top/img/stable%20diffusion/2023-4-22/stable%20diffusion_20230423%20(10).png" alt="image-20230422151438756" style="zoom: 67%;" /><img src="https://jinlinxingjian.top/img/stable%20diffusion/2023-4-22/stable%20diffusion_20230423%20(11).png" alt="image-20230422151438756" style="zoom: 67%;" /><p>似乎有点奇怪？不过效果感觉还可以哦~</p><h2 id="海报lora加上宅女房间tag">海报lora加上宅女房间tag</h2><img src="https://jinlinxingjian.top/img/stable%20diffusion/2023-4-22/stable%20diffusion_20230423%20(12).png" alt="image-20230422151438756" style="zoom: 67%;" /><img src="https://jinlinxingjian.top/img/stable%20diffusion/2023-4-22/stable%20diffusion_20230423%20(13).png" alt="image-20230422151438756" style="zoom: 67%;" /><p>感觉效果还行</p><p>宅女房间关键tag</p><pre class="line-numbers language-none"><code class="language-none">messy room,guitar case,(computer),headphones,tablet pc,trash can,computer,game console,mirror,box,stuffed animal,chair,cellphone,toy,electric guitar,handheld game console,&#123;baseball bat&#125;,<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;原因&quot;&gt;原因&lt;/h2&gt;
+&lt;p&gt;记录一下，我的AI绘画炼丹供大家参考&lt;/p&gt;
+&lt;h2 id=&quot;粉色夕阳背景&quot;&gt;粉色夕阳背景&lt;/h2&gt;
+&lt;img src=&quot;https://jinlinxingjian.top/img/stable%20diffusion/2023-4</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Beautiful Soup的一些语法和爬虫的运用</title>
+    <link href="https://jinlinxingjian.top/045e149eb750/"/>
+    <id>https://jinlinxingjian.top/045e149eb750/</id>
+    <published>2023-04-17T11:59:32.000Z</published>
+    <updated>2023-04-24T08:39:30.237Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="简介">简介</h2><p>Beautiful Soup是python的一个库，最主要的功能是从网页抓取数据。官方解释如下：</p><blockquote><p>Beautiful Soup提供一些简单的、python式的函数用来处理导航、搜索、修改分析树等功能。它是一个工具箱，通过解析文档为用户提供需要抓取的数据，因为简单，所以不需要多少代码就可以写出一个完整的应用程序。</p><p>Beautiful Soup自动将输入文档转换为Unicode编码，输出文档转换为utf-8编码。你不需要考虑编码方式，除非文档没有指定一个编码方式，这时，Beautiful Soup就不能自动识别编码方式了。然后，你仅仅需要说明一下原始编码方式就可以了。</p><p>Beautiful Soup已成为和lxml、html6lib一样出色的python解释器，为用户灵活地提供不同的解析策略或强劲的速度。</p></blockquote><h2 id="一个简单案例">一个简单案例</h2><p>该案例使用Beautiful Soup简单爬取一个京东的网页数据</p><img src="./../img/post/Beautiful-Soup的一些语法和爬虫的运用/image-20230417200441849.png" alt="image-20230417200441849" style="zoom:50%;" /><p>代码</p><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> requests<span class="token keyword">from</span> bs4 <span class="token keyword">import</span> BeautifulSoup<span class="token keyword">import</span> pandas <span class="token keyword">as</span> pd<span class="token keyword">import</span> openpyxl<span class="token comment">#请求网站，获取到网页资源</span>date<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"https://search.jd.com/Search?keyword=%E4%BC%91%E9%97%B2%E9%9E%8B&amp;enc=utf-8&amp;wq=%E4%BC%91%E9%97%B2%E9%9E%8B&amp;pvid=04a7485c9360491bbb049acec91927e4"</span><span class="token punctuation">)</span><span class="token comment">#对网页资源进行解析</span>soup<span class="token operator">=</span>BeautifulSoup<span class="token punctuation">(</span>date<span class="token punctuation">.</span>content<span class="token punctuation">,</span><span class="token string">"html.parser"</span><span class="token punctuation">)</span><span class="token comment">#对网页资源进行补全和格式化</span>soup<span class="token punctuation">.</span>prettify<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment">#获取到单个商品的div</span><span class="token builtin">list</span><span class="token operator">=</span>soup<span class="token punctuation">.</span>find_all<span class="token punctuation">(</span><span class="token string">"div"</span><span class="token punctuation">,</span>class_<span class="token operator">=</span><span class="token string">"gl-i-wrap"</span><span class="token punctuation">)</span><span class="token comment">#新建一个数组，保存鞋子的信息</span>arr<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">list</span><span class="token punctuation">:</span>    <span class="token comment">#获取鞋子的名字</span>    list_name<span class="token operator">=</span><span class="token punctuation">(</span>i<span class="token punctuation">.</span>find_all<span class="token punctuation">(</span><span class="token string">"div"</span><span class="token punctuation">,</span>attrs<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token string">"class"</span><span class="token punctuation">,</span><span class="token string">"p-name"</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>find_all<span class="token punctuation">(</span><span class="token string">"em"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>get_text<span class="token punctuation">(</span><span class="token punctuation">)</span>    <span class="token comment">#获取鞋子的价格</span>    list_price<span class="token operator">=</span><span class="token punctuation">(</span>i<span class="token punctuation">.</span>find_all<span class="token punctuation">(</span><span class="token string">"div"</span><span class="token punctuation">,</span>attrs<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token string">"class"</span><span class="token punctuation">,</span><span class="token string">"p-price"</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>find_all<span class="token punctuation">(</span><span class="token string">"i"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>get_text<span class="token punctuation">(</span><span class="token punctuation">)</span>    <span class="token comment">#获取鞋子的图片链接</span>    list_img<span class="token operator">=</span><span class="token punctuation">(</span>i<span class="token punctuation">.</span>find_all<span class="token punctuation">(</span><span class="token string">"div"</span><span class="token punctuation">,</span>attrs<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token string">"class"</span><span class="token punctuation">,</span><span class="token string">"p-img"</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>find_all<span class="token punctuation">(</span><span class="token string">"img"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"data-lazy-img"</span><span class="token punctuation">)</span>    <span class="token comment">#将获取到的信息添加到数组中</span>    arr<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">[</span>list_name<span class="token punctuation">,</span>list_price<span class="token punctuation">,</span>list_img<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">#新建一个pandas的数据,并往其中填入arr数组的内容</span>excel<span class="token operator">=</span>pd<span class="token punctuation">.</span>DataFrame<span class="token punctuation">(</span>arr<span class="token punctuation">,</span>columns<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">"鞋名"</span><span class="token punctuation">,</span><span class="token string">"价格"</span><span class="token punctuation">,</span><span class="token string">"图片链接"</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token comment">#将pandas数据转化为Excel表格，并在本地保存</span>excel<span class="token punctuation">.</span>to_excel<span class="token punctuation">(</span><span class="token string">"demo1.xlsx"</span><span class="token punctuation">,</span>sheet_name<span class="token operator">=</span><span class="token string">'demo1'</span><span class="token punctuation">,</span>index<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>Excel文件</p><img src="./../img/post/Beautiful-Soup的一些语法和爬虫的运用/image-20230417200636635.png" alt="image-20230417200636635" style="zoom: 80%;" /><h2 id="Beautiful-Soup的一些语法">Beautiful Soup的一些语法</h2><ul class="lvl-0"><li class="lvl-2"><p>获取标签的属性: <code>soup.find(&quot;img&quot;).get(&quot;data-lazy-img&quot;)</code></p></li><li class="lvl-2"><p>获取标签的内容: <code>soup.find(&quot;img&quot;).get_text()</code></p></li><li class="lvl-2"><p>获取所有的 div 标签: <code>soup.find_all(&quot;div&quot;)</code></p></li><li class="lvl-2"><p>获取所有的 div 标签(限定其属性): <code>soup.find(&quot;div&quot;, attrs = &#123;&quot;class&quot;:&quot;p-price&quot;&#125;)</code></p></li><li class="lvl-2"><p>查找一个元素: <code>soup.find()</code></p></li><li class="lvl-2"><p>查找一组元素: <code>soup.find_all(&quot;div&quot;)</code></p></li><li class="lvl-2"><p>将素组存为文件: <code>pandas.DataFrame(_array).to_csv(&quot;./phone_info.csv&quot;)</code></p></li></ul><blockquote><p>tips: find和find_all方法的区别，find方法返回第一个匹配到的对象，而find_all返回所有匹配到的对象，是一个列表</p></blockquote><h2 id="joblib库中的Parallel实现并行下载">joblib库中的Parallel实现并行下载</h2><p>一个简单例子</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">Parallel<span class="token punctuation">(</span>n_jobs<span class="token operator">=</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">(</span>delayed<span class="token punctuation">(</span>download_pdf<span class="token punctuation">)</span><span class="token punctuation">(</span>pdf_link<span class="token punctuation">)</span> <span class="token keyword">for</span> pdf_link <span class="token keyword">in</span> pdf_links<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>具体来说，<code>Parallel(n_jobs=-1)</code>创建了一个<code>Parallel</code>对象，其中<code>n_jobs=-1</code>表示将使用所有可用的CPU核心并行下载PDF文件。<code>delayed(download_pdf)</code>是一个装饰器函数，它将<code>download_pdf</code>函数延迟执行，并返回一个可调用的对象。最后，<code>(delayed(download_pdf)(pdf_link) for pdf_link in pdf_links)</code>是一个生成器表达式，它为每个PDF链接创建了一个函数调用。</p><p>简单点说，delayed函数将你的函数转化为延迟执行的函数，因为要多线程运行，for pdf_link in pdf_links的意思是将pdf_links列表中的每一个元素都作为延迟执行的函数的传入参数</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;简介&quot;&gt;简介&lt;/h2&gt;
+&lt;p&gt;Beautiful Soup是python的一个库，最主要的功能是从网页抓取数据。官方解释如下：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Beautiful Soup提供一些简单的、python式的函数用来处理导航、搜索、修改分析树等</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>docker中tag和版本号的区别</title>
+    <link href="https://jinlinxingjian.top/929e4c9abf5a/"/>
+    <id>https://jinlinxingjian.top/929e4c9abf5a/</id>
+    <published>2023-04-14T13:28:16.000Z</published>
+    <updated>2023-04-19T13:52:20.443Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="tag（标签）和版本号的区别">tag（标签）和版本号的区别</h2><p>在 Docker 中，标签（tag）和版本号（version）都用于区分不同的镜像。但它们的意义和作用是不同的。</p><p>标签是一种用于标识和描述 Docker 镜像的方式。每个 Docker 镜像都可以有一个或多个标签，标签可以是任何字符串，用于描述该镜像的特定属性、用途、版本等信息。例如，你可以使用 <code>latest</code> 标签表示该镜像是最新版本的，或者使用 <code>v1.0</code> 标签表示该镜像的版本号为 1.0。</p><p>版本号则是一种用于区分不同镜像版本的方式。每个 Docker 镜像都有一个唯一的版本号，用于标识该镜像的某个特定版本。版本号通常由一个或多个数字、字母和符号组成，用于表示镜像的发布日期、版本号、修订号等信息。例如，你可以使用 <code>1.0.0</code> 版本号表示该镜像的版本为 1.0.0。</p><p>需要注意的是，标签和版本号在 Docker 中是两个独立的概念，它们可以单独使用，也可以一起使用。你可以为一个镜像设置多个标签，但每个标签都必须唯一。你也可以为一个镜像设置多个版本号，但不同版本号的镜像必须具有不同的标签或 ID。</p><p>总之，标签用于描述 Docker 镜像的特定属性和用途，而版本号用于区分不同版本的 Docker 镜像，两者可以一起使用来为 Docker 镜像提供更加完整的信息描述。</p><blockquote><p>tips：以上来自chatGpt的回答</p></blockquote><p>我的理解，版本号是tag的一种特殊存在形式，tag可以是任何内容，也可以是版本号。</p><p>值得一提的是，一个镜像可以有多个标签，可以写一个标签JsonToString表明用途，也可以再写一个版本号</p><h2 id="上传语法">上传语法</h2><blockquote><p>在docker中，需要先打标签，然后再推送</p></blockquote><h3 id="打标签">打标签</h3><p>打一个标签</p><pre class="line-numbers language-none"><code class="language-none">docker tag de2238d7b9aa registry.aliyuncs.com&#x2F;jinlinxingjian&#x2F;jinlinxingjian:stringTest<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>一次打多个标签</p><pre class="line-numbers language-none"><code class="language-none">docker tag de2238d7b9aa registry.aliyuncs.com&#x2F;jinlinxingjian&#x2F;jinlinxingjian:stringTestregistry.aliyuncs.com&#x2F;jinlinxingjian&#x2F;jinlinxingjian:1.0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><h3 id="推送">推送</h3><pre class="line-numbers language-none"><code class="language-none">docker push registry.aliyuncs.com&#x2F;jinlinxingjian&#x2F;jinlinxingjian:1.0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>registry.aliyuncs.com是阿里云仓库</p><p>jinlinxingjian是我的命名空间</p><p>jinlinxingjian:1.0是选择要被推送的镜像</p><h3 id="在推送中打标签">在推送中打标签</h3><pre class="line-numbers language-none"><code class="language-none">docker push registry.aliyuncs.com&#x2F;jinlinxingjian&#x2F;jinlinxingjian:stringTestregistry.cn-hangzhou.aliyuncs.com&#x2F;jinlinxingjian&#x2F;jinlinxingjian:1.0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p><a href="http://registry.aliyuncs.com/jinlinxingjian/jinlinxingjian:stringTest">registry.aliyuncs.com/jinlinxingjian/jinlinxingjian:stringTest</a> 选择镜像</p><p><a href="http://registry.cn-hangzhou.aliyuncs.com/jinlinxingjian/jinlinxingjian:1.0">registry.cn-hangzhou.aliyuncs.com/jinlinxingjian/jinlinxingjian:1.0</a> 中的 1.0  就是新打上的标签（也是版本号）</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;tag（标签）和版本号的区别&quot;&gt;tag（标签）和版本号的区别&lt;/h2&gt;
+&lt;p&gt;在 Docker 中，标签（tag）和版本号（version）都用于区分不同的镜像。但它们的意义和作用是不同的。&lt;/p&gt;
+&lt;p&gt;标签是一种用于标识和描述 Docker 镜像的方式。每个 </summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>分享一个网易云的美化插件BetterNCM</title>
+    <link href="https://jinlinxingjian.top/114e980029da/"/>
+    <id>https://jinlinxingjian.top/114e980029da/</id>
+    <published>2023-04-11T12:33:36.000Z</published>
+    <updated>2023-04-19T13:52:55.829Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="介绍">介绍</h2><img src="../img/post/分享一个网易云的美化插件BetterNCM/image-20230411203500012.png" alt="image-20230411203500012"/><h2 id="我的美化">我的美化</h2><img src="../img/post/分享一个网易云的美化插件BetterNCM/image-20230411203556034.png" alt="image-20230411203556034" style="zoom: 50%;" /><img src="../img/post/分享一个网易云的美化插件BetterNCM/image-20230411203808071.png" alt="image-20230411203808071" style="zoom:50%;" /><img src="../img/post/分享一个网易云的美化插件BetterNCM/image-20230411203828034.png" alt="image-20230411203828034" style="zoom:50%;" /><img src="../img/post/分享一个网易云的美化插件BetterNCM/image-20230411204212151.png" alt="image-20230411204212151" style="zoom:50%;" /><h2 id="特色">特色</h2><h4 id="跟随音乐封面变换的主题色">跟随音乐封面变换的主题色</h4><h4 id="重绘的全屏音乐界面">重绘的全屏音乐界面</h4><h4 id="精简过的网易云界面（去除了大部分的广告）">精简过的网易云界面（<s>去除了大部分的广告</s>）</h4><h4 id="按钮功能加强">按钮功能加强</h4><h4 id="个人听歌排行可视化">个人听歌排行可视化</h4><h2 id="下载安装">下载安装</h2><p><a href="https://microblock.cc/betterncm">MicroBlock | BetterNCM</a></p><img src="../img/post/分享一个网易云的美化插件BetterNCM/image-20230411204242676.png" alt="image-20230411204242676" style="zoom:33%;" /><p>进入官网下载，打开安装即可~</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;介绍&quot;&gt;介绍&lt;/h2&gt;
+&lt;img src=&quot;../img/post/分享一个网易云的美化插件BetterNCM/image-20230411203500012.png&quot; alt=&quot;image-20230411203500012&quot;/&gt;
+&lt;h2 id=&quot;我的美化&quot;&gt;我</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>我加入腾讯云自媒体分享计划啦！</title>
+    <link href="https://jinlinxingjian.top/443d2ce3be71/"/>
+    <id>https://jinlinxingjian.top/443d2ce3be71/</id>
+    <published>2023-04-09T15:05:31.000Z</published>
+    <updated>2023-04-19T13:53:16.653Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="腾讯云自媒体分享计划是什么？">腾讯云自媒体分享计划是什么？</h2><p>你是否因为写过了文章或者笔记在自己的博客，然后由于博客流量较少，每篇博文都只有几个浏览量？</p><p>“腾讯云自媒体计划”是由腾讯云发起的为期一年的为广大自媒体扶持的计划，对于有 10 篇以上符合投稿要求原创技术文章的博主或微信公众号，<strong>提供各大技术社区及平台百万级流量支持、技术书籍、腾讯云周边礼品、线下技术沙龙及大会的门票、腾讯云新品内测试用体验、与开源项目大牛零距离接触、社区成长值激励、云服务器CVM代金券（有效期为3个月，使用条件：限新购、续费，适用付费类型：预付费）。</strong><br><a href="https://blog.lmb520.cn/go/aHR0cHM6Ly9jbG91ZC50ZW5jZW50LmNvbS9kZXZlbG9wZXIvc3VwcG9ydC1wbGFuP2ludml0ZV9jb2RlPTJxc2lxa2N5YjZza2s">点我前往申请腾讯云自媒体分享计划</a></p><p><strong>注意：</strong> 成功参与自媒体分享计划后，<s>不用你手动</s>去腾讯云开发者社区更新文章，符合条件的文章会定期自动同步过去！你只需要在博客完成您的创作即可！</p><h1>我的看法</h1><p>激励博主写高质量的文章并给予流量和服务器的支持，我很认可！</p><p>我的博客即将同步至腾讯云开发者社区，邀请大家一同入驻：<a href="https://cloud.tencent.com/developer/support-plan?invite_code=1ew4ndimao03f">https://cloud.tencent.com/developer/support-plan?invite_code=1ew4ndimao03f</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;腾讯云自媒体分享计划是什么？&quot;&gt;腾讯云自媒体分享计划是什么？&lt;/h2&gt;
+&lt;p&gt;你是否因为写过了文章或者笔记在自己的博客，然后由于博客流量较少，每篇博文都只有几个浏览量？&lt;/p&gt;
+&lt;p&gt;“腾讯云自媒体计划”是由腾讯云发起的为期一年的为广大自媒体扶持的计划，对于有 1</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>在java web中引用html文件乱码的解决方案</title>
+    <link href="https://jinlinxingjian.top/42592652f785/"/>
+    <id>https://jinlinxingjian.top/42592652f785/</id>
+    <published>2023-04-09T07:44:48.000Z</published>
+    <updated>2023-04-09T08:01:59.017Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="介绍">介绍</h2><p>首先这是一个简单的操作，读取在webapp目录下的一个day04.html文件，并将其返回给浏览器</p><p>代码如下</p><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 返回 day04.jsp 文件</span>        response<span class="token punctuation">.</span><span class="token function">setContentType</span><span class="token punctuation">(</span><span class="token string">"text/html;charset=utf-8"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        response<span class="token punctuation">.</span><span class="token function">setCharacterEncoding</span><span class="token punctuation">(</span><span class="token string">"utf-8"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        request<span class="token punctuation">.</span><span class="token function">setCharacterEncoding</span><span class="token punctuation">(</span><span class="token string">"UTF-8"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        request<span class="token punctuation">.</span><span class="token function">setAttribute</span><span class="token punctuation">(</span><span class="token string">"CharacterEncoding"</span><span class="token punctuation">,</span><span class="token string">"UTF-8"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        request<span class="token punctuation">.</span><span class="token function">getRequestDispatcher</span><span class="token punctuation">(</span><span class="token string">"/day04.jsp"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forward</span><span class="token punctuation">(</span>request<span class="token punctuation">,</span> response<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>很明显格式都设置正常了，但还是乱码，</p><p>day04.html部分代码如下</p><pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">html</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Login<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>查询资料得知，可能是Tomcat服务器编码配置问题</p><p>TOmcat的配置文件server.xml其中的一部分</p><pre class="line-numbers language-none"><code class="language-none">&lt;Connector port&#x3D;&quot;8080&quot; protocol&#x3D;&quot;HTTP&#x2F;1.1&quot;           connectionTimeout&#x3D;&quot;20000&quot;           redirectPort&#x3D;&quot;8443&quot;            URIEncoding&#x3D;&quot;UTF-8&quot;           &#x2F;&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>也设置为了utf8格式，还是乱码</p><p>经过检测，发现将day04.html文件转化为day04.jsp文件解决问题</p><blockquote><p>建议，以后的java web项目还是使用jsp文件来代替html文件 （有大佬知道解决方案请在评论区留言）</p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;介绍&quot;&gt;介绍&lt;/h2&gt;
+&lt;p&gt;首先这是一个简单的操作，读取在webapp目录下的一个day04.html文件，并将其返回给浏览器&lt;/p&gt;
+&lt;p&gt;代码如下&lt;/p&gt;
+&lt;pre class=&quot;line-numbers language-java&quot; data-langua</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>金鳞星溅的Butterfly魔改记录</title>
+    <link href="https://jinlinxingjian.top/150bc05fb9f4/"/>
+    <id>https://jinlinxingjian.top/150bc05fb9f4/</id>
+    <published>2023-04-03T09:37:10.000Z</published>
+    <updated>2023-05-22T03:15:07.616Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="nav标签栏魔改">nav标签栏魔改</h2><h2 id="宽屏适应">宽屏适应</h2><h2 id="文章顶部波浪">文章顶部波浪</h2><h2 id="文章卡片选择变色和阴影">文章卡片选择变色和阴影</h2><h2 id="加载页面重写">加载页面重写</h2><h2 id="加载页面上方胶囊">加载页面上方胶囊</h2><h2 id="音乐界面">音乐界面</h2><h2 id="CDN修改">CDN修改</h2><h2 id="Arititalk说说">Arititalk说说</h2><h2 id="友链朋友圈">友链朋友圈</h2><h2 id="Twikoo评论邮件回复美化">Twikoo评论邮件回复美化</h2><h2 id="404页面重绘">404页面重绘</h2><h2 id="随机博客文章">随机博客文章</h2><h2 id="友链添加轮播图">友链添加轮播图</h2>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;nav标签栏魔改&quot;&gt;nav标签栏魔改&lt;/h2&gt;
+&lt;h2 id=&quot;宽屏适应&quot;&gt;宽屏适应&lt;/h2&gt;
+&lt;h2 id=&quot;文章顶部波浪&quot;&gt;文章顶部波浪&lt;/h2&gt;
+&lt;h2 id=&quot;文章卡片选择变色和阴影&quot;&gt;文章卡片选择变色和阴影&lt;/h2&gt;
+&lt;h2 id=&quot;加载页面重写&quot;&gt;加载</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>记录一次博客的迁移</title>
+    <link href="https://jinlinxingjian.top/36d9acfe8f43/"/>
+    <id>https://jinlinxingjian.top/36d9acfe8f43/</id>
+    <published>2023-03-22T15:58:43.000Z</published>
+    <updated>2023-04-12T03:44:19.695Z</updated>
+    
+    <content type="html"><![CDATA[<h1>起因</h1><p>原来博客是放在腾讯云服务器上的，最近服务器快过期了，于是就想找个花费少一点的地方放博客，思来想去，想到以前看到的博客部署方案，腾讯cos+腾讯cdn加速的部署方案，一个月非常便宜，大概就一两块，比云服务一个月30 40 好多了</p><p>下面是详细的部署方案</p><blockquote><p>注意事项：需要已备案的域名</p></blockquote><h1>新建一个腾讯cos桶</h1><img src="../img/post/记录一次博客的迁移/image-20230325103414709.png" alt="image-20230325103414709" /><p>点击立即使用，点到存储桶列表</p><img src="../img/post/记录一次博客的迁移/image-20230325103630784.png" alt="image-20230325103630784"/><p><img src="https://jinlinxingjian.top/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%8D%9A%E5%AE%A2%E7%9A%84%E8%BF%81%E7%A7%BB/image-20230325103648051.png" alt="image-20230325103648051"></p><p>点击下面的创建存储桶</p><img src="../img/post/记录一次博客的迁移/image-20230325103759086.png" alt="image-20230325103759086" height="300px"/><p>选择公有读私有写，地区和名称随意，然后一直下一步即可</p><h1>安装Hexo-deployer-cos-cdn 插件</h1><p>插件主人博客原文：<a href="https://www.lixl.cn/2020/020936412.html">https://www.lixl.cn/2020/020936412.html</a></p><img src="../img/post/记录一次博客的迁移/image-20230401162555558.png" alt="image-20230401162555558" height="200px"/><h2 id="安装插件">安装插件</h2><pre class="line-numbers language-none"><code class="language-none">npm install hexo-deployer-cos-cdn --save<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h2 id="最简单配置实例">最简单配置实例</h2><pre class="line-numbers language-none"><code class="language-none">deploy:type: cos-cdn cloud: tencent bucket: blog-1234567890 region: ap-shanghai secretId: AKIDIgxxxxxxxxxxxxxxxxxxxx0SepjX secretKey: qXPCbxxxxxxxxxxxxxxxxxxxxsJZfdR<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>如上配置，图片和文件将发布到 腾讯云的 同一个 bucket 中，默认开启CDN加速，CDN加速域名为 <code>_config.yml</code> 中配置的 <code>url</code>，图片上传后，Markdown 源文件中图片依然是相对路径。</p><h2 id="获得secret秘钥">获得secret秘钥</h2><img src="../img/post/记录一次博客的迁移/image-20230325111235501.png" alt="image-20230325111235501" height="200px"/><p>点击秘钥管理</p><p><img src="https://jinlinxingjian.top/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%8D%9A%E5%AE%A2%E7%9A%84%E8%BF%81%E7%A7%BB/image-20230325111259084.png" alt="image-20230325111259084"></p><p>点击访问秘钥</p><p><img src="https://jinlinxingjian.top/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%8D%9A%E5%AE%A2%E7%9A%84%E8%BF%81%E7%A7%BB/image-20230325111332842.png" alt="image-20230325111332842"></p><p>点击新建秘钥</p><p>然后就获取到了秘钥id和key，填写到插件的配置中即可</p><h1>开启COS桶的静态网页功能</h1><img src="../img/post/记录一次博客的迁移/image-20230325111731177.png" alt="image-20230325111731177" height="200px"/><img src="../img/post/记录一次博客的迁移/image-20230325111743713.png" alt="image-20230325111743713" height="200px"/><p>选择开启静态网页功能</p><h1>配置CDN加速</h1><p>我用的是腾讯的CDN加速，来到腾讯cdn的控制台，选择新建域名</p><img src="../img/post/记录一次博客的迁移/image-20230325111930956.png" alt="image-20230325111930956" height="200px"/><h2 id="CDN配置如下">CDN配置如下</h2><p><img src="https://jinlinxingjian.top/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%8D%9A%E5%AE%A2%E7%9A%84%E8%BF%81%E7%A7%BB/image-20230325112004624.png" alt="image-20230325112004624"></p><p>其他的，自己看着点就行</p><h1>实验</h1><p>最后hexo d见证你的网页吧~</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1&gt;起因&lt;/h1&gt;
+&lt;p&gt;原来博客是放在腾讯云服务器上的，最近服务器快过期了，于是就想找个花费少一点的地方放博客，思来想去，想到以前看到的博客部署方案，腾讯cos+腾讯cdn加速的部署方案，一个月非常便宜，大概就一两块，比云服务一个月30 40 好多了&lt;/p&gt;
+&lt;p&gt;下面是详</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>你的的娱乐时间正在转换为劳动时间！</title>
+    <link href="https://jinlinxingjian.top/0f2e5af301e8/"/>
+    <id>https://jinlinxingjian.top/0f2e5af301e8/</id>
+    <published>2023-02-14T01:44:43.000Z</published>
+    <updated>2023-04-12T03:44:57.090Z</updated>
+    
+    <content type="html"><![CDATA[<h1>起因</h1><p>最近在b站看到一个视频<br><img src="../img/post/%E4%BD%A0%E7%9A%84%E7%9A%84%E5%A8%B1%E4%B9%90%E6%97%B6%E9%97%B4%E6%AD%A3%E5%9C%A8%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%8A%B3%E5%8A%A8%E6%97%B6%E9%97%B4%EF%BC%81/2023-02-14-09-52-39.png" alt=""></p><p><a href="https://www.bilibili.com/video/BV1SA411B7KY">视频链接</a></p><p>这个视频很有意思，大意是短视频虽然让你获得了娱乐，但是同时你也被在剥削。你在短视频平台上的时长越多，你就越有可能给广告买单，当你买单的同时，平台就得到了抽成。所以对于平台来说，观众就是商品，观众越多，来投放广告的人就越多。在这种情况下，你的休闲时间就是被转换为了劳动时间，你在为短视频平台劳动！</p><h1>自己的感悟</h1><p>人们的娱乐方式有很多种，但有些游戏又何尝不是在剥削你呢！</p><p>举个例子，我之前玩过的一款国风大逃杀游戏-永劫无间，这里简单介绍一下大逃杀游戏</p><blockquote><p>“大逃杀”类型的游戏是一种暴力的、不可预知的、疯狂的多人游戏模式，在游戏中，你的唯一目标就是生存，成为最后唯一活下来的那个人（或者一支队伍）。你可以躲在灌木丛里，等着那群疯子自相残杀，然后对手变得越来越少，或者操起武器自己动手，干掉一个是一个。</p></blockquote><p>永劫无间是可以通过锻炼技术从而显著提升游戏体验的游戏。随着游戏的大火，许多主播纷纷加入游戏，为了直播效果，主播们选择“炸鱼”，就是从一个新号开始打，在技术水平较低的段位上虐菜。不幸的是，我就是被炸鱼的那个，在不断的被炸鱼中，我渐渐明白了一个道理。在某种意义上，我就是“陪玩”，陪着那些主播玩，不仅免费提供，还可能会自己充钱进去。</p><p><strong>我愤怒了！</strong></p><p>我玩游戏竟然不再快乐，我宝贝的娱乐时间竟然变成主播的直播效果！不知不觉间，我竟然在为别人打工，<strong>我在被剥削！</strong></p><p>于是，我抛弃了永劫无间，现在我只玩一些休闲的娱乐游戏，连我曾经最爱的英雄联盟我都不爱玩了（下棋还是很好玩的）。因为我不想我的娱乐时间，都是在为别人服务（例如给氪金大佬当陪衬，给主播当菜鸟虐衬托主播的技术），更重要的是，不想在自己的娱乐时间闷闷不乐。</p><p><strong>你有多久没有开开心心的打过一次游戏了</strong>？</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1&gt;起因&lt;/h1&gt;
+&lt;p&gt;最近在b站看到一个视频&lt;br&gt;
+&lt;img src=&quot;../img/post/%E4%BD%A0%E7%9A%84%E7%9A%84%E5%A8%B1%E4%B9%90%E6%97%B6%E9%97%B4%E6%AD%A3%E5%9C%A8%E8%BD</summary>
+      
+    
+    
+    
+    <category term="杂谈" scheme="https://jinlinxingjian.top/categories/%E6%9D%82%E8%B0%88/"/>
+    
+    
+    <category term="杂谈" scheme="https://jinlinxingjian.top/tags/%E6%9D%82%E8%B0%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>P1014 Cantor 表 题解</title>
+    <link href="https://jinlinxingjian.top/39c077ec4779/"/>
+    <id>https://jinlinxingjian.top/39c077ec4779/</id>
+    <published>2022-08-23T01:42:05.000Z</published>
+    <updated>2023-04-12T03:46:52.531Z</updated>
+    
+    <content type="html"><![CDATA[<h1>[NOIP1999 普及组] Cantor 表</h1><h2 id="题目描述">题目描述</h2><p>现代数学的著名证明之一是 Georg Cantor 证明了有理数是可枚举的。他是用下面这一张表来证明这一命题的：</p><p>$1/1$ ,   $1/2$ ,   $1/3$ ,   $1/4$,    $1/5$,   …</p><p>$2/1$,   $2/2$ ,   $2/3$,    $2/4$,    …</p><p>$3/1$ ,   $3/2$,    $3/3$,    …</p><p>$4/1$,    $4/2$,    …</p><p>$5/1$,   …</p><p>…</p><p>我们以 Z 字形给上表的每一项编号。第一项是 $1/1$，然后是 $1/2$，$2/1$，$3/1$，$2/2$，…</p><h2 id="输入格式">输入格式</h2><p>整数$N$（$1 \leq N \leq 10^7$）。</p><h2 id="输出格式">输出格式</h2><p>表中的第 $N$ 项。</p><h2 id="样例-1">样例 #1</h2><h3 id="样例输入-1">样例输入 #1</h3><pre class="line-numbers language-none"><code class="language-none">7<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h3 id="样例输出-1">样例输出 #1</h3><pre class="line-numbers language-none"><code class="language-none">1&#x2F;4<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><hr><p>题目中的z字型就是下图</p><p><img src="../img/post/P1014-Cantor-%E8%A1%A8-%E9%A2%98%E8%A7%A3/2022-08-23-09-45-24.png" alt=""></p><p>1.观察斜线中的数字数量规律第一条斜线，就是1/1<br>第二条斜线，就是1/2,2/1<br>第三条斜线，就是3/1,2/2/,1/3</p><p>可以观察到是一个等差数列，根据等差数列求和公式<img src="../img/post/P1014-Cantor-%E8%A1%A8-%E9%A2%98%E8%A7%A3/2022-08-23-09-51-00.png" alt=""><br>根据Sn&gt;N这个公式，可以解出n,n是这一项在第几条斜线的位置</p><blockquote><p>tips:N是题目中给的第N项</p></blockquote><p>2.算出该项在该斜线中是第几项<br>Sn-Sn-1就是该项在该斜线中是第几项</p><p>3.奇数偶数行的分子分母规律观察即可</p><hr><p>下面贴出代码</p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">#include&lt;stdlib.h&gt;#include&lt;stdio.h&gt;int main()&#123;    int n;    int row,row_num&#x3D;0,row_pre_num,row_inline_index;    scanf(&quot;%d&quot;,&amp;n);    int i&#x3D;1;    while (1)    &#123;           row_num&#x3D;i+i*(i-1)*(1.0&#x2F;2);        if(row_num&gt;&#x3D;n)&#123;            break;        &#125;        i++;    &#125;    row&#x3D;i;    row_pre_num&#x3D;(row-1)+(row-1)*((row-1)-1)*(1.0&#x2F;2);    row_inline_index&#x3D;n-row_pre_num-1;    if(row%2&#x3D;&#x3D;0)&#123;        printf(&quot;%d&#x2F;%d&quot;,1+row_inline_index,row-row_inline_index);    &#125;    else&#123;        printf(&quot;%d&#x2F;%d&quot;,row-row_inline_index,1+row_inline_index);    &#125;    system(&quot;pause&quot;);    return 0;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><hr>]]></content>
+    
+    
+    <summary type="html">一道找规律的题</summary>
+    
+    
+    
+    <category term="题解" scheme="https://jinlinxingjian.top/categories/%E9%A2%98%E8%A7%A3/"/>
+    
+    
+    <category term="洛谷，算法" scheme="https://jinlinxingjian.top/tags/%E6%B4%9B%E8%B0%B7%EF%BC%8C%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>配置友链朋友圈</title>
+    <link href="https://jinlinxingjian.top/997cf36fdd75/"/>
+    <id>https://jinlinxingjian.top/997cf36fdd75/</id>
+    <published>2022-08-17T04:48:01.000Z</published>
+    <updated>2023-04-12T03:47:47.105Z</updated>
+    
+    <content type="html"><![CDATA[<h1>效果图</h1><p><img src="../img/post/%E9%85%8D%E7%BD%AE%E5%8F%8B%E9%93%BE%E6%9C%8B%E5%8F%8B%E5%9C%88/2022-08-17-13-00-23.png" alt=""></p><h1><strong>千万不要用这个教程的方法</strong></h1><p><a href="https://fcircle-doc.js.cool/#/">https://fcircle-doc.js.cool/#/</a></p><hr><p>我在这个教程中耗费了18个小时，最后都没有完成</p><blockquote><p><strong>所以说，方向远大于努力啊！！！！！</strong></p></blockquote><h1>正确的教程</h1><p><a href="https://noionion.top/47095.html">https://noionion.top/47095.html</a></p><blockquote><p>tips:之前的那个教程之所以会出错，就是他的前端代码有误</p></blockquote><blockquote><p>建议：后端部署的方法按照第一个教程来，前端部署的方法按照第二个教程来</p></blockquote><p>注意点:不会的地方，折腾超过一个小时的，建议问人或者换方法，千万不要死磕，不然就会像我一样这样浪费生命。</p><p><strong>部署有问题的，在评论区留言，我会帮你无偿解决</strong></p><hr>]]></content>
+    
+    
+    <summary type="html">方向远大于努力！</summary>
+    
+    
+    
+    <category term="Butterfly改造" scheme="https://jinlinxingjian.top/categories/Butterfly%E6%94%B9%E9%80%A0/"/>
+    
+    
+    <category term="Butterfly" scheme="https://jinlinxingjian.top/tags/Butterfly/"/>
+    
+    <category term="努力" scheme="https://jinlinxingjian.top/tags/%E5%8A%AA%E5%8A%9B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Artitalk国内访问失败解决方案</title>
+    <link href="https://jinlinxingjian.top/1f00333d3978/"/>
+    <id>https://jinlinxingjian.top/1f00333d3978/</id>
+    <published>2022-08-14T05:42:54.000Z</published>
+    <updated>2023-04-12T03:47:29.574Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="起因">起因</h3><p>前几天在配置Arititalk时候老是加载慢或者加载失败，到处寻找原因，发现是Artitalk配置的后台learncloud国际版的共享api被墙了</p><p><strong>解决方案</strong></p><blockquote><p>绑定专属的api来解决</p></blockquote><h4 id="1-绑定二级域名">1.绑定二级域名</h4><p>登录learncloud，找到设置中的域名绑定，进行域名绑定</p><blockquote><p><strong>注意</strong>：必须要用你的二级域名去绑定</p></blockquote><blockquote><p>二级域名：在你的域名前面加速前缀的域名</p><pre class="line-numbers language-none"><code class="language-none">你的域名:example.com二级域名:example1.example.com<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></blockquote><p><img src="../img/post/Artitalk%E5%9B%BD%E5%86%85%E8%AE%BF%E9%97%AE%E5%A4%B1%E8%B4%A5%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/2022-08-14-13-47-42.png" alt=""></p><p>绑定完之后去DNS控制台为你域名添加一条解析</p><p><img src="../img/post/Artitalk%E5%9B%BD%E5%86%85%E8%AE%BF%E9%97%AE%E5%A4%B1%E8%B4%A5%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/2022-08-14-13-54-17.png" alt=""></p><p><strong>注意</strong>：一定要是CNAME记录，后面的值就是learncloud域名绑定那里给的值</p><h4 id="2-修改config-yml文件">2.修改config.yml文件</h4><p>在你的aritatalk配置项中加上serverUrl这一项。</p><p>将下图中的api.jinlinxingjian.top这一项换成你的二级域名即可</p><p><img src="../img/post/Artitalk%E5%9B%BD%E5%86%85%E8%AE%BF%E9%97%AE%E5%A4%B1%E8%B4%A5%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/2022-08-14-13-56-24.png" alt=""></p><hr><p>到此，就配置完成啦~</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;起因&quot;&gt;起因&lt;/h3&gt;
+&lt;p&gt;前几天在配置Arititalk时候老是加载慢或者加载失败，到处寻找原因，发现是Artitalk配置的后台learncloud国际版的共享api被墙了&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;解决方案&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquo</summary>
+      
+    
+    
+    
+    <category term="Butterfly改造" scheme="https://jinlinxingjian.top/categories/Butterfly%E6%94%B9%E9%80%A0/"/>
+    
+    
+    <category term="Aritalk" scheme="https://jinlinxingjian.top/tags/Aritalk/"/>
+    
+    <category term="墙" scheme="https://jinlinxingjian.top/tags/%E5%A2%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>递归压缩文件夹内所有png,jpeg图片</title>
+    <link href="https://jinlinxingjian.top/f544e4fc0b0c/"/>
+    <id>https://jinlinxingjian.top/f544e4fc0b0c/</id>
+    <published>2022-08-12T12:41:06.000Z</published>
+    <updated>2023-04-12T03:48:07.587Z</updated>
+    
+    <content type="html"><![CDATA[<p>在我的日常博客写作中，经常要在文章中插入图片，这样一来，网页的加载速度就被降低了，为了提高网页的加载速度，我决定<strong>压缩图片</strong></p><hr><h2 id="Tinypng网站">Tinypng网站</h2><p>最开始，我是在一个叫做<a href="https://tinypng.com/">Tinypng</a>的网站上进行在线压缩的，然后再从网站上下载压缩后的图片。<br><strong>但是</strong>，这家压缩后的文件是以压缩包的形式让你下载的。这就导致我使用的时候步骤极其繁琐，需要经历</p><blockquote><p>上传，下载，解压，复制，粘贴覆盖</p></blockquote><p>五个步骤，之后我就寻找有没有更简便的方法</p><hr><h2 id="super-tinypng">super-tinypng</h2><p>这是一个作者开发的通过官方api无限制上传并下载的插件叫做<a href="https://github.com/zhanyuzhang/super-tinypng">super-tinypng</a>。<img src="../img/post/%E9%80%92%E5%BD%92%E5%8E%8B%E7%BC%A9%E6%96%87%E4%BB%B6%E5%A4%B9%E5%86%85%E6%89%80%E6%9C%89png-jpeg%E5%9B%BE%E7%89%87/2022-08-12-20-52-15.png" alt=""><br>这个小插件使用非常简单，打开cmd进入到你想要压缩的文件夹目录下，输入super-tinypng即可压缩所有png，jpg图片。<br><strong>但是</strong>，这个插件输出是在当前目录下新建一个叫做out的文件夹，并将压缩后的图片放入该文件夹。虽然比起之前已经很简单了，但我想应该再简单一点，于是我修改了他的源文件</p><hr><h2 id="super-tinypng加强版">super-tinypng加强版</h2><p>首先，我定了两点目标</p><blockquote><p>1.递归压缩文件夹下面的所有图片<br>2.输出文件直接覆盖图片</p></blockquote><p>首先，来看作者的js文件<img src="../img/post/%E9%80%92%E5%BD%92%E5%8E%8B%E7%BC%A9%E6%96%87%E4%BB%B6%E5%A4%B9%E5%86%85%E6%89%80%E6%9C%89png-jpeg%E5%9B%BE%E7%89%87/2022-08-12-20-59-58.png" alt=""><br>上面是一些参数，具体就是这几个函数</p><p>首先，调用fileList函数获取到当前文件夹下的所有文件的文件名称，并存在files数组中</p><blockquote><p>fileList中具体使用的是fs.readdir方法<br><img src="../img/post/%E9%80%92%E5%BD%92%E5%8E%8B%E7%BC%A9%E6%96%87%E4%BB%B6%E5%A4%B9%E5%86%85%E6%89%80%E6%9C%89png-jpeg%E5%9B%BE%E7%89%87/2022-08-12-21-05-05.png" alt=""></p></blockquote><p>然后fileList再对files数组中的每个元素使用fileFilter方法过滤（返回的元素是jpg或者png图片）。</p><p>对fileFilter返回的元素使用fileUpload方法上传。</p><p>上传成功的话就调用fileUpdate方法输出压缩后的图片。</p><p>好了，这就是原作者的思路，要实现我的功能，首先需要<strong>能获取到当前目录下所有文件的文件名称</strong></p><blockquote><p><strong>注意</strong>：是文件名称，不是文件夹名称哦</p></blockquote><p>首先你要知道这个函数</p><blockquote><p><strong>fs.statSync()</strong><br><img src="../img/post/%E9%80%92%E5%BD%92%E5%8E%8B%E7%BC%A9%E6%96%87%E4%BB%B6%E5%A4%B9%E5%86%85%E6%89%80%E6%9C%89png-jpeg%E5%9B%BE%E7%89%87/2022-08-12-21-17-53.png" alt=""></p><blockquote><p>tips:<strong>Sync</strong>表示该函数是<strong>同步</strong>的</p></blockquote></blockquote><p>这个函数返回的stats对象中有一个可以判断该文件是否为文件夹的函数<br><em><strong>下面这段代码就是我的思路</strong></em></p><pre class="line-numbers language-JavaScript" data-language="JavaScript"><code class="language-JavaScript">function fileList_my(folder) &#123;    &#x2F;&#x2F;获取到当前文件夹下所有文件的文件名称的数组    let files &#x3D; fs.readdirSync(folder);    files.forEach(file &#x3D;&gt; &#123;    &#x2F;&#x2F;遍历数组，如果是文件夹就继续往下走    &#x2F;&#x2F;记得在路径中加上当前文件夹名称    let stats&#x3D;fs.statSync(path.join(folder, file));    if(stats.isDirectory())&#123;      fileList_my(path.join(folder, file));    &#125;  &#125;);  &#x2F;&#x2F;相当于在当前目录下直接调用super-tinypng  fileList(folder);&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>至此，就完成了我的第一个目标，递归压缩文件夹下所有png，jpg图片。</p><hr><p>接下来是我的第二个需求，这个倒是很简单</p><pre class="line-numbers language-JavaScript" data-language="JavaScript"><code class="language-JavaScript">const outputDir &#x3D; path.join(cwd , &#39;output&#39;);&#x2F;&#x2F;将输出文件夹创建到当前目录下&#x2F;&#x2F;imgpath &#x3D; path.join(cwd , &#39;output&#39;, imgpath.replace(cwd, &#39;&#39;));imgpath&#x3D; path.join(cwd , imgpath.replace(cwd, &#39;&#39;));&#x2F;&#x2F; 不创建out文件夹&#x2F;&#x2F; if(!fs.existsSync(outputDir)) &#123;&#x2F;&#x2F;   fs.mkdirSync(outputDir);&#x2F;&#x2F; &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>其中注释掉的上原来的代码，将其输出的路径中的out去掉即可直接覆盖源文件，然后注释掉创建out文件夹的代码。</p><p>ok，完成第二个需求</p><hr><p>从这个小东西的改装中，我学到了node中fs模块的一些函数的应用如果你想使用这个东西，请直接复制我的代码进去并使用我的方法<br>⬇️ <em><strong>就是这样</strong></em> ⬇️</p><pre class="line-numbers language-JavaScript" data-language="JavaScript"><code class="language-JavaScript">fileList_my(root);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>]]></content>
+    
+    
+    <summary type="html">快速，无脑，省心，高效的压缩</summary>
+    
+    
+    
+    <category term="技术" scheme="https://jinlinxingjian.top/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="js" scheme="https://jinlinxingjian.top/tags/js/"/>
+    
+    <category term="递归" scheme="https://jinlinxingjian.top/tags/%E9%80%92%E5%BD%92/"/>
+    
+    <category term="压缩" scheme="https://jinlinxingjian.top/tags/%E5%8E%8B%E7%BC%A9/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Gitalk无法获取Github的Token问题的解决方法</title>
+    <link href="https://jinlinxingjian.top/8d32df9f88ec/"/>
+    <id>https://jinlinxingjian.top/8d32df9f88ec/</id>
+    <published>2022-08-10T07:07:23.000Z</published>
+    <updated>2023-04-12T03:47:14.629Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Gitalk-无法获取-Github-Token-问题的解决方法">Gitalk 无法获取 Github Token 问题的解决方法</h3><p>目前博客采用的 Gitalk 来作为帖子的评论系统</p><p>其原理是通过帖子名来生成一个唯一 id ，用这个在 Github 仓库下开一个 issue ，这个 issue 就成为帖子的评论仓库了</p><p>由于要操作到 Github 仓库，所以是需要借助 Github 的开放 API 来完成的</p><p>其中有一步需要获取一个 access_token ，操蛋的是，这个 API 是不支持跨域访问的</p><p><a href="https://github.com/login/oauth/access_token">https://github.com/login/oauth/access_token</a></p><p>所幸 Gitalk 使用了亚马逊的云服务代理里这个接口</p><p><a href="https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token">https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token</a></p><p>看起来没问题了，更操蛋的又来了，这个地址被墙了，意味着现在没法代理接口了，要么自己买服务器代理接口，要么科学上网</p><p>科学上网不现实，你不能指望大家都开着飞机来看你的帖子</p><p>所以只能在自己写代理服务器上做文章了</p><hr><p>原文博主自己搭了个代理服务器，真的是奉献精神拉满！！！</p><p>所以大家就直接用吧,教程如下</p><p>在你的config.yml配置文件中的gitalk配置项中加上proxy这一个配置</p><pre><code>proxy: https://cors-server-ecru.vercel.app/github_access_token</code></pre><p><img src="../img/post/Gitalk%E6%97%A0%E6%B3%95%E8%8E%B7%E5%8F%96Github%E7%9A%84Token%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/2022-08-12-17-07-20.png" alt=""></p><blockquote><p>tips: 你也可以去原文学习，fork代码自己搭建一个代理服务器</p></blockquote><blockquote><p>tips： 我使用的butterfly主题已经自带gitalk组件</p></blockquote><blockquote><p>通用解决方案：将gitalk的js文件中的proxy都改成本中的url</p></blockquote><p>本文内容来自</p><blockquote><p><a><a href="https://prohibitorum.top/2022/07/26/%E8%A7%A3%E5%86%B3-Gitalk-%E6%97%A0%E6%B3%95%E8%8E%B7%E5%8F%96-Github-Token-%E9%97%AE%E9%A2%98/">https://prohibitorum.top/2022/07/26/解决-Gitalk-无法获取-Github-Token-问题/</a><a/></p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;Gitalk-无法获取-Github-Token-问题的解决方法&quot;&gt;Gitalk 无法获取 Github Token 问题的解决方法&lt;/h3&gt;
+&lt;p&gt;目前博客采用的 Gitalk 来作为帖子的评论系统&lt;/p&gt;
+&lt;p&gt;其原理是通过帖子名来生成一个唯一 id ，用这个</summary>
+      
+    
+    
+    
+    <category term="教程" scheme="https://jinlinxingjian.top/categories/%E6%95%99%E7%A8%8B/"/>
+    
+    
+    <category term="墙" scheme="https://jinlinxingjian.top/tags/%E5%A2%99/"/>
+    
+    <category term="Github" scheme="https://jinlinxingjian.top/tags/Github/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>hexo的Butterfly上配置gitalk的踩雷点</title>
+    <link href="https://jinlinxingjian.top/7f09ba803ec9/"/>
+    <id>https://jinlinxingjian.top/7f09ba803ec9/</id>
+    <published>2022-08-05T13:19:09.000Z</published>
+    <updated>2023-04-12T03:46:33.905Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="1-配置use">1.配置use</h3><p>如图所示，use配置的下面是</p><blockquote><p><strong>- Gitalk</strong></p></blockquote><p><strong>注意:</strong></p><blockquote><p>Gitalk前面有个空格而且和use不能在同一行</p></blockquote><p><img src="../img/post/hexo%E7%9A%84Butterfly%E4%B8%8A%E9%85%8D%E7%BD%AEgitalk%E7%9A%84%E8%B8%A9%E9%9B%B7%E7%82%B9/1.png" alt=""></p><h3 id="2-配置gitalk">2.配置gitalk</h3><p>在gitalk的配置如下<br><img src="../img/post/hexo%E7%9A%84Butterfly%E4%B8%8A%E9%85%8D%E7%BD%AEgitalk%E7%9A%84%E8%B8%A9%E9%9B%B7%E7%82%B9/2.png" alt=""></p><blockquote><p><strong>2022.8.9最新消息，github获取Token的api被墙，gitalk无法正常运行，看我的下一篇博客有解决方案</strong></p></blockquote>]]></content>
+    
+    
+    <summary type="html">关于我在配置gitalk时踩的雷</summary>
+    
+    
+    
+    <category term="Butterfly改造" scheme="https://jinlinxingjian.top/categories/Butterfly%E6%94%B9%E9%80%A0/"/>
+    
+    
+    <category term="Butterfly" scheme="https://jinlinxingjian.top/tags/Butterfly/"/>
+    
+    <category term="Gitalk" scheme="https://jinlinxingjian.top/tags/Gitalk/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>滚动视差网页效果</title>
+    <link href="https://jinlinxingjian.top/d5ac05c3451e/"/>
+    <id>https://jinlinxingjian.top/d5ac05c3451e/</id>
+    <published>2022-04-19T02:03:36.000Z</published>
+    <updated>2023-02-15T08:33:35.914Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>视差滚动（Parallax Scrolling）是指让多层背景以不同的速度移动，形成立体的运动效果，带来非常出色的视觉体验。 作为网页设计的热点趋势，越来越多的网站应用了这项技术。</strong></p><p><strong>通常而言，滚动视差在前端需要辅助 Javascript 才能实现。当然，其实 CSS 在实现滚动视差效果方面，也有着不俗的能力。下面就让我们来见识一二：</strong></p><h4 id="background-attachment-fixed">background-attachment: fixed</h4><p>话不多说，上效果<a href="https://jinlinxingjian.github.io/cssPractice/视差/shicha.html">链接在这里</a></p><blockquote><p>这种方法是将背景固定在了网页后边</p></blockquote><hr><h4 id="transform-translate3d">transform: translate3d</h4><p>话不多说，上效果<a href="https://jinlinxingjian.github.io/cssPractice/视差/shanyang.html">链接在这里</a></p><p><em><strong>原理：</strong></em><br><strong>1.给父元素给上perspective属性，3px效果最好</strong><br><strong>2.给父元素里面的子盒子加上浮动属性</strong><br><strong>3.给不同的元素设置不同的transform: translateZ()属性，在设置完之后元素大小会发生变化，使用scale()属性将其变回来</strong><br><strong>4.给子元素设置了不同的translateZ()，子元素离摄像机的距离就越远，在滚动时候移动的上下距离相就越小，这就达到了滚动视差的效果。</strong></p><blockquote><p>特别的，父元素里面的子元素必须都是div盒子，你的内容应该装在div盒子里面</p></blockquote>]]></content>
+    
+    
+    <summary type="html">视差滚动是指让多层背景以不同的速度移动，形成立体的运动效果，带来非常出色的视觉体验</summary>
+    
+    
+    
+    <category term="特效" scheme="https://jinlinxingjian.top/categories/%E7%89%B9%E6%95%88/"/>
+    
+    
+    <category term="js" scheme="https://jinlinxingjian.top/tags/js/"/>
+    
+    <category term="css" scheme="https://jinlinxingjian.top/tags/css/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>纯原生js和css实现轮播</title>
+    <link href="https://jinlinxingjian.top/0acd8749aba8/"/>
+    <id>https://jinlinxingjian.top/0acd8749aba8/</id>
+    <published>2022-04-11T09:10:26.000Z</published>
+    <updated>2023-04-12T03:45:57.207Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="效果">效果</h2><p><img src="../img/post/%E7%BA%AF%E5%8E%9F%E7%94%9Fjs%E5%92%8Ccss%E5%AE%9E%E7%8E%B0%E8%BD%AE%E6%92%AD/lunbo.gif" alt=""></p><h4 id="如何实现图片滚动一张后停一下的效果">如何实现图片滚动一张后停一下的效果</h4><p>首先，那一个大的计时器，用于开启一次图片的切换，大计时器的时间间隔为图片切换的时间和图片的停留时间，在大的计时器里面设置一个小的计时器，小计时器的时间间隔为图片移动的最小时间单位</p><p>话不多数，上代码</p><pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">html</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>X-UA-Compatible<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>IE=edge<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>viewport<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>width=device-width, initial-scale=1.0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Document<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">></span></span><span class="token style"><span class="token language-css">        <span class="token selector">*</span> <span class="token punctuation">&#123;</span>            <span class="token property">margin</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>            <span class="token property">padding</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>        <span class="token punctuation">&#125;</span>        <span class="token selector">img</span> <span class="token punctuation">&#123;</span>            <span class="token property">width</span><span class="token punctuation">:</span> 800px<span class="token punctuation">;</span>            <span class="token property">height</span><span class="token punctuation">:</span> 450px<span class="token punctuation">;</span>        <span class="token punctuation">&#125;</span>        <span class="token selector">li</span> <span class="token punctuation">&#123;</span>            <span class="token property">float</span><span class="token punctuation">:</span> left<span class="token punctuation">;</span>        <span class="token punctuation">&#125;</span>        <span class="token selector">.div_view</span> <span class="token punctuation">&#123;</span>            <span class="token property">margin</span><span class="token punctuation">:</span> 0 auto<span class="token punctuation">;</span>            <span class="token property">width</span><span class="token punctuation">:</span> 800px<span class="token punctuation">;</span>            <span class="token property">height</span><span class="token punctuation">:</span> 450px<span class="token punctuation">;</span>            <span class="token comment">/* background-color: red; */</span>            <span class="token property">overflow</span><span class="token punctuation">:</span> hidden<span class="token punctuation">;</span>        <span class="token punctuation">&#125;</span>        <span class="token selector">ul</span> <span class="token punctuation">&#123;</span>            <span class="token property">position</span><span class="token punctuation">:</span> relative<span class="token punctuation">;</span>            <span class="token property">width</span><span class="token punctuation">:</span> 3200px<span class="token punctuation">;</span>            <span class="token property">left</span><span class="token punctuation">:</span> 0px<span class="token punctuation">;</span>            <span class="token property">list-style</span><span class="token punctuation">:</span> none<span class="token punctuation">;</span>        <span class="token punctuation">&#125;</span>    </span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">></span></span>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">        window<span class="token punctuation">.</span><span class="token function-variable function">onload</span><span class="token operator">=</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>            <span class="token keyword">function</span> <span class="token function">getStyle</span><span class="token punctuation">(</span><span class="token parameter">obj<span class="token punctuation">,</span>name</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>                <span class="token comment">//第一个参数为obj为要获取属性的对象</span>                <span class="token comment">//第二个参数为name为要获取的属性名字</span>                <span class="token keyword">return</span> window<span class="token punctuation">.</span>getComputedStyle<span class="token operator">?</span><span class="token function">getComputedStyle</span><span class="token punctuation">(</span>obj<span class="token punctuation">,</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">[</span>name<span class="token punctuation">]</span><span class="token operator">:</span>obj<span class="token punctuation">.</span>currentStyle<span class="token punctuation">[</span>name<span class="token punctuation">]</span>                <span class="token comment">//这种方式的代码比if判断要简单一些</span>            <span class="token punctuation">&#125;</span>                   <span class="token keyword">let</span> speed<span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">;</span>                <span class="token function">setInterval</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>                    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"start"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                    <span class="token comment">//获取ing的宽度和图片的数量</span>                    <span class="token keyword">let</span> img_w<span class="token operator">=</span><span class="token function">parseInt</span><span class="token punctuation">(</span><span class="token function">getStyle</span><span class="token punctuation">(</span>document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">"view"</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">"width"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                     <span class="token keyword">let</span> imgNum<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">;</span>                    <span class="token keyword">let</span> timer<span class="token operator">=</span><span class="token function">setInterval</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>                        <span class="token keyword">let</span> ul<span class="token operator">=</span>document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">"ul"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                        <span class="token keyword">let</span> left<span class="token operator">=</span><span class="token function">parseInt</span><span class="token punctuation">(</span><span class="token function">getStyle</span><span class="token punctuation">(</span>ul<span class="token punctuation">,</span><span class="token string">"left"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                        <span class="token comment">//获取ul和它的left值</span>                        ul<span class="token punctuation">.</span>style<span class="token punctuation">.</span>left<span class="token operator">=</span>left<span class="token operator">-</span>speed<span class="token operator">+</span><span class="token string">"px"</span><span class="token punctuation">;</span>                        <span class="token comment">//修改left</span>                        left<span class="token operator">=</span><span class="token function">parseInt</span><span class="token punctuation">(</span><span class="token function">getStyle</span><span class="token punctuation">(</span>ul<span class="token punctuation">,</span><span class="token string">"left"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                        <span class="token comment">//更新left值</span>                        <span class="token keyword">if</span><span class="token punctuation">(</span>left<span class="token operator">==</span><span class="token operator">-</span><span class="token punctuation">(</span>img_w<span class="token operator">*</span>imgNum<span class="token punctuation">)</span><span class="token punctuation">)</span>                        <span class="token punctuation">&#123;</span>                            ul<span class="token punctuation">.</span>style<span class="token punctuation">.</span>left<span class="token operator">=</span><span class="token number">0</span><span class="token operator">+</span><span class="token string">"px"</span><span class="token punctuation">;</span>                        <span class="token punctuation">&#125;</span>                        <span class="token keyword">if</span><span class="token punctuation">(</span>left<span class="token operator">%</span>img_w<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span>                        <span class="token punctuation">&#123;</span>                            <span class="token function">clearInterval</span><span class="token punctuation">(</span>timer<span class="token punctuation">)</span><span class="token punctuation">;</span>                        <span class="token punctuation">&#125;</span>                    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">)</span>                <span class="token punctuation">&#125;</span><span class="token punctuation">,</span><span class="token number">4000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token punctuation">&#125;</span>    </span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>div_view<span class="token punctuation">"</span></span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>view<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>ul<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img/1.jpg<span class="token punctuation">"</span></span> <span class="token attr-name">alt</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span><span class="token punctuation">"</span></span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img_1<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img/2.jpg<span class="token punctuation">"</span></span> <span class="token attr-name">alt</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span><span class="token punctuation">"</span></span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img_2<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img/3.jpg<span class="token punctuation">"</span></span> <span class="token attr-name">alt</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span><span class="token punctuation">"</span></span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img_3<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img/1.jpg<span class="token punctuation">"</span></span> <span class="token attr-name">alt</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span><span class="token punctuation">"</span></span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img_1<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+    
+    
+    <summary type="html">最简单的轮播</summary>
+    
+    
+    
+    <category term="页面组件" scheme="https://jinlinxingjian.top/categories/%E9%A1%B5%E9%9D%A2%E7%BB%84%E4%BB%B6/"/>
+    
+    
+    <category term="js" scheme="https://jinlinxingjian.top/tags/js/"/>
+    
+    <category term="css" scheme="https://jinlinxingjian.top/tags/css/"/>
+    
+    <category term="轮播" scheme="https://jinlinxingjian.top/tags/%E8%BD%AE%E6%92%AD/"/>
+    
+    <category term="html" scheme="https://jinlinxingjian.top/tags/html/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用hexo创建自己的博客</title>
+    <link href="https://jinlinxingjian.top/2f6e9263a5cc/"/>
+    <id>https://jinlinxingjian.top/2f6e9263a5cc/</id>
+    <published>2022-02-09T09:39:45.000Z</published>
+    <updated>2023-04-12T03:45:19.296Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="什么是hexo">什么是hexo</h2><p>Hexo官网中说是这么描述的：A fast, simple &amp; powerful blog framework,即:一个快速、简单且强大的博客快速生产工具。它的简单体现在你完全有可能在30分钟内就生成属于你的个人博客。而它的强大体现在你对细节的调整上完全有可能花上一天的时间。</p><h2 id="准备搭建环境">准备搭建环境</h2><h3 id="1-安装node-js">1.安装node.js</h3><p>Node.js 的实质是一个JavaScript运行环境,这里我们主要使用它来生成我们博客的静态页面。从官网下载最新的安装包进行默认安装就好。安装过程略。</p><h3 id="2-安装git环境">2.安装git环境</h3><p>git是最流行的分布式版本控制系统，我们使用它主要是与github进行交互。安装git使用默认选项安装即可，安装过程略。</p><h3 id="3-注册github">3.注册github</h3><p>GitHub是世界上最大的代码托管平台，我们将要使用github的github pages功能来实现我们博客在网上的部署</p><h2 id="开始搭建博客">开始搭建博客</h2><h3 id="创建文件夹">创建文件夹</h3><p>在本地新建一个文件夹用于存放我们的博客，并且右键菜单选择Git Bash Here,然后在Git Bash里输入：</p><blockquote><p>npm install hexo</p></blockquote><h3 id="执行hexo命令">执行hexo命令</h3><p>依次执行以下3个命令:</p><blockquote><p>hexo init</p></blockquote><p>初始化hexo环境,这时会在目录下自动生成hexo的文件</p><blockquote><p>npm install</p></blockquote><p>安装npm依赖包</p><blockquote><p>hexo generate</p></blockquote><p>生成静态页面(也可以简化为hexo g)</p><blockquote><p>hexo server</p></blockquote><p>生成本地服务(也可以简化为hexo s)</p><h3 id="查看生成效果">查看生成效果</h3><p>这时候我们打开浏览器输入<a href="http://localhost:4000">http://localhost:4000</a> 看看可不可以访问。如果默认的hexo博客出现，那么恭喜你，你已经搭建好了自己的博客，接下来我们就要将它发布到网上。</p><h2 id="部署在网上">部署在网上</h2><p>这里我们选择的是github 的github pages的服务，只要你将网页原文件上传到仓库里，github就会自动生成一个属于你的网页</p><h3 id="1-创建远程仓库">1.创建远程仓库</h3><p>新建一个跟自己账号名字一样的空仓库</p><h3 id="连接本地与远程github仓库">连接本地与远程github仓库</h3><p>打开本地博客的文件夹，打开_config.yml进行编辑翻到文件最下方，将deploy的选项改成以下的形式</p><blockquote><p>deploy:<br>type: git<br>repo: <a href="mailto:git@github.com">git@github.com</a>:!!!/???.git<br>branch: master<br>root: /???/</p></blockquote><p>三个感叹号的地方写上你的用户名三个问号的地方写上你的仓库名字然后在GitBash中执行</p><blockquote><p>npm install hexo-deployer-git --save</p></blockquote><p>最后执行这一句将你的博客推送到仓库里</p><blockquote><p>hexo deploy</p></blockquote><p>(也可以简化为hexo d)<br>最后再进入你的仓库点击setting<br>翻到最下面点击Check it out here!<br><img src="../img/post/%E4%BD%BF%E7%94%A8hexo%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/1.png" alt=""><br>选择master分支,记得点save,然后就会出现上面那个网址，点进去就是你的网页了</p><blockquote><p>github pages 的反应有点慢，如果没有刷新出来记得等个两三分钟就好了</p></blockquote><p><img src="../img/post/%E4%BD%BF%E7%94%A8hexo%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/2.png" alt=""></p><hr><p>到此，基于hexo博客的创建就完成了，欢呼吧，芜湖起飞</p>]]></content>
+    
+    
+    <summary type="html">这是一篇教你如何使用hexo创建出和本博客一样优美的博客,而且此种方法的优点是开销为0</summary>
+    
+    
+    
+    <category term="Butterfly改造" scheme="https://jinlinxingjian.top/categories/Butterfly%E6%94%B9%E9%80%A0/"/>
+    
+    
+    <category term="Butterfly" scheme="https://jinlinxingjian.top/tags/Butterfly/"/>
+    
+    <category term="教程" scheme="https://jinlinxingjian.top/tags/%E6%95%99%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用idea创建javaweb项目</title>
+    <link href="https://jinlinxingjian.top/80876b61a0b0/"/>
+    <id>https://jinlinxingjian.top/80876b61a0b0/</id>
+    <published>2022-01-28T03:19:10.000Z</published>
+    <updated>2023-04-12T03:49:10.629Z</updated>
+    
+    <content type="html"><![CDATA[<p>这是一篇关于教你如何使用idea创建javaweb的文章</p><h2 id="第一步">第一步</h2><p>选择 new project,然后选择java enterprise<br>选择web application<br><img src="../img/post/%E4%BD%BF%E7%94%A8idea%E5%88%9B%E5%BB%BAjavaweb%E9%A1%B9%E7%9B%AE/1.png" alt=""><br>为你的项目取名字</p><h2 id="第二步">第二步</h2><p>在web/WEB-INF下创建两个文件夹classes和lib，classes用来存放编译后输出的classes文件，lib用于存放第三方jar包。项目结构如下:<br><img src="../img/post/%E4%BD%BF%E7%94%A8idea%E5%88%9B%E5%BB%BAjavaweb%E9%A1%B9%E7%9B%AE/2.png" alt=""></p><h2 id="第三步">第三步</h2><p>选择setting，选择project struct<br>选择module，选择path<br>选择&quot;Use module compile output path&quot; -&gt; 将Output path和Test output path都选择刚刚创建的classes文件夹。<img src="../img/post/%E4%BD%BF%E7%94%A8idea%E5%88%9B%E5%BB%BAjavaweb%E9%A1%B9%E7%9B%AE/3.png" alt=""><br>接着选择Dependencies -&gt;  将Module SDK选择为1.8 -&gt; 点击右边的“+”号  -&gt; 选择1 “Jars or Directories”<br><img src="../img/post/%E4%BD%BF%E7%94%A8idea%E5%88%9B%E5%BB%BAjavaweb%E9%A1%B9%E7%9B%AE/4.png" alt=""><br>-&gt; 选择刚刚创建的lib文件夹选择jars or Directories<br><img src="../img/post/%E4%BD%BF%E7%94%A8idea%E5%88%9B%E5%BB%BAjavaweb%E9%A1%B9%E7%9B%AE/5.png" alt=""><br>然后点apply就ok了</p><h2 id="第四步">第四步</h2><p>接下来配置tomcat服务器点这个 Edit Configuration<br><img src="../img/post/%E4%BD%BF%E7%94%A8idea%E5%88%9B%E5%BB%BAjavaweb%E9%A1%B9%E7%9B%AE/6.png" alt=""><br>点击“+”号 -&gt; 选择“Tomcat Server” -&gt; 选择“Local”<br><img src="../img/post/%E4%BD%BF%E7%94%A8idea%E5%88%9B%E5%BB%BAjavaweb%E9%A1%B9%E7%9B%AE/7.png" alt=""><br>选择tomcat,选择depends，选择加号<img src="../img/post/%E4%BD%BF%E7%94%A8idea%E5%88%9B%E5%BB%BAjavaweb%E9%A1%B9%E7%9B%AE/8.png" alt=""><br>选择war explorer<br><img src="../img/post/%E4%BD%BF%E7%94%A8idea%E5%88%9B%E5%BB%BAjavaweb%E9%A1%B9%E7%9B%AE/9.png" alt=""><br>下面这个Application context建议改为/，这样项目直接访问localhost：8080就能访问了,最后选择Apply<br>tomcat服务器就配置好了<br><img src="../img/post/%E4%BD%BF%E7%94%A8idea%E5%88%9B%E5%BB%BAjavaweb%E9%A1%B9%E7%9B%AE/10.png" alt=""></p>]]></content>
+    
+    
+    <summary type="html">这是一篇教你如何使用idea创建java web项目的文章</summary>
+    
+    
+    
+    <category term="教程" scheme="https://jinlinxingjian.top/categories/%E6%95%99%E7%A8%8B/"/>
+    
+    
+    <category term="java" scheme="https://jinlinxingjian.top/tags/java/"/>
+    
+    <category term="idea" scheme="https://jinlinxingjian.top/tags/idea/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Github pages 设置双域名</title>
+    <link href="https://jinlinxingjian.top/ec76b296a1ad/"/>
+    <id>https://jinlinxingjian.top/ec76b296a1ad/</id>
+    <published>2022-01-05T02:53:02.000Z</published>
+    <updated>2023-04-12T03:48:40.041Z</updated>
+    
+    <content type="html"><![CDATA[<h1>原理</h1><p>github pages并不支持两个域名，但我们可以让其中的一个域名绑定一个空的github pages，再通过重定向使用户转接到正确的网站</p><h1>第一步</h1><p>需要购买两个域名，这里我是在腾讯云服务器买的<a href="https://buy.cloud.tencent.com/domain?from=console">购买域名的链接在这里</a></p><blockquote><p>话说我这样算是在给腾讯打广告吗（腾讯打钱）。</p></blockquote><p><img src="../img/post/Github%20pages%20%E8%AE%BE%E7%BD%AE%E5%8F%8C%E5%9F%9F%E5%90%8D/1.png" alt="2333"></p><h1>第二步</h1><p><strong>拿一个域名绑定网站的pages，然后新建一个仓库</strong></p><blockquote><p>首先获取你的pages的ip<br>win + r 输入cmd打开命令行，输入</p></blockquote><pre><code>ping www.你的仓库名字.github.io -4</code></pre><p><img src="../img/post/Github%20pages%20%E8%AE%BE%E7%BD%AE%E5%8F%8C%E5%9F%9F%E5%90%8D/2.png" alt=""></p><blockquote><p>那几个数字就是你仓库的ip</p></blockquote><p>接下来是域名的绑定，在腾讯Dns控制台<img src="../img/post/Github%20pages%20%E8%AE%BE%E7%BD%AE%E5%8F%8C%E5%9F%9F%E5%90%8D/2022-08-12-17-24-33.png" alt=""><br>点击快速添加记录<img src="../img/post/Github%20pages%20%E8%AE%BE%E7%BD%AE%E5%8F%8C%E5%9F%9F%E5%90%8D/2022-08-12-17-25-45.png" alt=""><br>输入上文获取到的ip，点击确定</p><h1>第三步</h1><p><strong>然后再拿一个域名来绑定这个新建的仓库</strong></p><blockquote><p>绑定的过程就省略了，重点是仓库里面的内容</p></blockquote><p>这个仓库里面有三个文件<br><strong>1.CNAME</strong><br>CNAME文件的创建方法就是先新建一个txt文件，然后在里面加入你的GitHub Pages的域名，然后去掉后缀的.txt</p><p><strong>2._config.yml</strong><br>文件里面只有这两行即可,要注意的是，文件的名字叫_config.yml，下划线不要少了</p><pre><code>title: voidauthor: void</code></pre><p>**<strong>3.404.html</strong><br>建立一个html文件，内容这么写</p><pre class="line-numbers language-none"><code class="language-none">&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;    &lt;meta charset&#x3D;&quot;utf-8&quot;&gt;    &lt;title&gt;正在重定向…… &lt;&#x2F;title&gt;&lt;&#x2F;head&gt;    &lt;script&gt;        window.onload&#x3D;function()&#123;            location.assign(&quot;185.199.109.153&quot;);        &#125;    &lt;&#x2F;script&gt;    &lt;body&gt;        正在重定向……    &lt;&#x2F;body&gt;&lt;&#x2F;html&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><blockquote><p>原理很简单，当访问这个域名的时候，网页自动重定向到你的博客</p></blockquote><blockquote><p>将location.assign中的ip换成上文的ip，也可以是你的域名,push一下你的仓库就over了</p></blockquote><hr><p><strong>至此，就成功地完成了我们的目标</strong></p>]]></content>
+    
+    
+    <summary type="html">这是一篇将你如何在github pages中使用两个域名绑定你的网页的教程</summary>
+    
+    
+    
+    <category term="Butterfly改造" scheme="https://jinlinxingjian.top/categories/Butterfly%E6%94%B9%E9%80%A0/"/>
+    
+    
+    <category term="Butterfly" scheme="https://jinlinxingjian.top/tags/Butterfly/"/>
+    
+    <category term="GitHub" scheme="https://jinlinxingjian.top/tags/GitHub/"/>
+    
+    <category term="域名" scheme="https://jinlinxingjian.top/tags/%E5%9F%9F%E5%90%8D/"/>
+    
+  </entry>
+  
+</feed>
