@@ -6,7 +6,7 @@
   <link href="https://jinlinxingjian.top/atom.xml" rel="self"/>
   
   <link href="https://jinlinxingjian.top/"/>
-  <updated>2023-06-14T04:00:47.576Z</updated>
+  <updated>2024-01-04T06:38:31.672Z</updated>
   <id>https://jinlinxingjian.top/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>IDEA中连接MYSQL失败问题</title>
+    <link href="https://jinlinxingjian.top/fa751fc9f08b/"/>
+    <id>https://jinlinxingjian.top/fa751fc9f08b/</id>
+    <published>2024-01-04T06:31:35.000Z</published>
+    <updated>2024-01-04T06:38:31.672Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="起因">起因</h2><p>在代码中使用jdbc连接mysql出现<img src="https://typora-1305229676.cos.ap-chengdu.myqcloud.com//image-20240104143341079.png" alt="image-20240104143341079"></p><p><img src="https://typora-1305229676.cos.ap-chengdu.myqcloud.com//image-20240104143357882.png" alt="image-20240104143357882"></p><h2 id="原因">原因</h2><p>客户端TLS版本与RDS for MySQL不一致导致SSL连接失败</p><h2 id="解决方案">解决方案</h2><h3 id="官方文档解决方案">官方文档解决方案</h3><blockquote><p>对于 Connector/J 8.0.26 及更高版本：TLSv1 和 TLSv1.1 在 Connector/J 8.0.26 中已弃用，并在 8.0.28 版中删除;删除的值被视为无效，无法与连接选项和会话设置一起使用。可以使用更安全的 TLSv1.2 和 TLSv1.3 协议进行连接。使用 TLSv1.3 需要使用 OpenSSL 1.1.1 或更高版本编译服务器，并使用支持 TLSv1.3 的 JVM（例如，Oracle Java 8u261 及更高版本）运行 Connector/J。</p></blockquote><h3 id="我的解决方案">我的解决方案</h3><p>不使用ssl连接，同时在一定程度上还能提高性能</p><p>在jdbc的url后面加上</p><pre class="line-numbers language-none"><code class="language-none">?useSSL&#x3D;false<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;起因&quot;&gt;起因&lt;/h2&gt;
+&lt;p&gt;在代码中使用jdbc连接mysql出现&lt;img src=&quot;https://typora-1305229676.cos.ap-chengdu.myqcloud.com//image-20240104143341079.png&quot; alt=</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>await axios竟然返回undefined？（已解决）</title>
